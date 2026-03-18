@@ -1,0 +1,264 @@
+@model List<DiabetesPatientApp.Models.ConsultationMessage>
+
+@{
+    ViewData["Title"] = "在线咨询";
+    var currentUserId = Context.Session.GetInt32("UserId");
+    var currentUserType = Context.Session.GetString("UserType");
+    var returnAction = string.Equals(currentUserType, "Doctor", StringComparison.OrdinalIgnoreCase) ? "Notifications" : "Doctors";
+    var returnController = string.Equals(currentUserType, "Doctor", StringComparison.OrdinalIgnoreCase) ? "Doctor" : "Consultation";
+    var returnText = "返回";
+}
+
+<style>
+    .chat-container {
+        max-width: 800px;
+        margin: auto;
+    }
+    .chat-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .chat-box {
+        height: 60vh;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #f1f3f5;
+    }
+    .message {
+        display: flex;
+        margin-bottom: 15px;
+    }
+    .message-content {
+        max-width: 70%;
+        padding: 10px 15px;
+        border-radius: 15px;
+        position: relative;
+    }
+    .message-time {
+        font-size: 0.75rem;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    .message-actions {
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    .received .message-actions {
+        justify-content: flex-start;
+    }
+    .message-actions .btn-link {
+        font-size: 0.7rem;
+        padding: 0;
+        color: #6c757d;
+        text-decoration: none;
+    }
+    .message-actions .btn-link:hover {
+        color: #dc3545;
+    }
+    .sent {
+        justify-content: flex-end;
+    }
+    .sent .message-content {
+        background-color: #4a9d6f;
+        color: white;
+        border-bottom-right-radius: 0;
+    }
+    .received {
+        justify-content: flex-start;
+    }
+    .received .message-content {
+        background-color: #ffffff;
+        border: 1px solid #e9ecef;
+        border-bottom-left-radius: 0;
+    }
+    .chat-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    #voiceInputBtn.recording {
+        background-color: #dc3545;
+        color: #fff;
+        border-color: #dc3545;
+    }
+</style>
+
+<div class="container-fluid mt-4 chat-container">
+    <div class="row mb-3">
+        <div class="col"></div>
+        <div class="col-auto">
+            <a href="@Url.Action(returnAction, returnController)" class="btn btn-secondary">@returnText</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header text-center chat-header">
+            <h4>与 @(Model.FirstOrDefault(m => m.SenderId != currentUserId)?.Sender?.FullName ?? Model.FirstOrDefault(m => m.ReceiverId != currentUserId)?.Receiver?.FullName ?? "医生") 的对话</h4>
+        </div>
+        <div class="card-body chat-box" id="chatBox">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var message in Model.OrderBy(m => m.CreatedDate))
+                {
+                    var messageClass = message.SenderId == currentUserId ? "sent" : "received";
+                    <div class="message @messageClass">
+                        <div>
+                            <div class="message-content">
+                                @if (message.MessageType == "Text")
+                                {
+                                    <p class="mb-0">@message.MessageContent</p>
+                                }
+                                else if (message.MessageType == "Voice")
+                                {
+                                    <audio controls style="width: 250px;">
+                                        <source src="@message.VoiceFilePath" type="audio/wav">
+                                    </audio>
+                                }
+                                else if (message.MessageType == "Image")
+                                {
+                                    <p class="mb-1">@(string.IsNullOrEmpty(message.MessageContent) ? "图片" : message.MessageContent)</p>
+                                    <a href="@message.VoiceFilePath" target="_blank" rel="noopener"><img src="@message.VoiceFilePath" alt="图片" class="rounded" style="max-width: 100%; max-height: 200px;"></a>
+                                }
+                                else if (message.MessageType == "File")
+                                {
+                                    <p class="mb-0"><a href="@message.VoiceFilePath" target="_blank" rel="noopener" download>@(message.MessageContent ?? "下载文件")</a></p>
+                                }
+                            </div>
+                            <div class="message-time text-end">@message.CreatedDate.ToString("HH:mm")</div>
+                            <div class="message-actions">
+                                <form method="post" action="@Url.Action("DeleteMessage")" class="d-inline" onsubmit="return confirm('确定删除这条消息？');">
+                                    <input type="hidden" name="messageId" value="@message.MessageId">
+                                    <input type="hidden" name="doctorId" value="@ViewBag.DoctorId">
+                                    <button type="submit" class="btn btn-link p-0">删除</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-center text-muted">开始您的对话吧！</p>
+            }
+        </div>
+        <div class="card-footer chat-footer">
+            <form method="post" action="@Url.Action("SendMessage")" id="messageForm" enctype="multipart/form-data">
+                <input type="hidden" name="receiverId" value="@ViewBag.DoctorId">
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-warning py-2 small">@TempData["Error"]</div>
+                }
+                <div class="input-group align-items-center">
+                    <input type="text" class="form-control" name="messageContent" id="messageContent" placeholder="输入消息或选图片/文件..." autocomplete="off">
+                    <button type="button" class="btn btn-outline-secondary ms-1" id="voiceInputBtn" title="语音输入">
+                        <span id="voiceIcon">🎤</span> 语音输入
+                    </button>
+                    <label class="btn btn-outline-secondary mb-0 ms-1" title="选择图片或文件">
+                        <input type="file" name="attachment" accept="image/*,.pdf,.doc,.docx,.txt" class="d-none"> 图片/文件
+                    </label>
+                    <button type="submit" class="btn btn-primary">发送</button>
+                </div>
+                <div id="voiceStatus" class="small mt-1" style="display:none;"></div>
+                <div id="fileHint" class="small text-muted mt-1" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var chatBox = document.getElementById('chatBox');
+            chatBox.scrollTop = chatBox.scrollHeight;
+            var fileInput = document.querySelector('input[name="attachment"]');
+            var fileHint = document.getElementById('fileHint');
+            if (fileInput && fileHint) {
+                fileInput.addEventListener('change', function() {
+                    if (this.files && this.files.length) {
+                        fileHint.textContent = '已选: ' + this.files[0].name;
+                        fileHint.style.display = 'block';
+                    } else {
+                        fileHint.style.display = 'none';
+                    }
+                });
+            }
+
+            // 语音输入
+            var VoiceRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var voiceBtn = document.getElementById('voiceInputBtn');
+            var messageInput = document.getElementById('messageContent');
+            var voiceStatus = document.getElementById('voiceStatus');
+            var voiceIcon = document.getElementById('voiceIcon');
+
+            if (!VoiceRecognition) {
+                if (voiceBtn) {
+                    voiceBtn.disabled = true;
+                    voiceBtn.title = '当前浏览器不支持语音识别，请使用 Chrome、Edge 或 Safari';
+                }
+            } else if (voiceBtn && messageInput) {
+                var recognition = new VoiceRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'zh-CN';
+
+                voiceBtn.addEventListener('click', function() {
+                    if (voiceBtn.classList.contains('recording')) {
+                        recognition.stop();
+                        return;
+                    }
+                    voiceStatus.style.display = 'block';
+                    voiceStatus.textContent = '正在聆听…';
+                    voiceStatus.className = 'small mt-1 text-primary';
+                    voiceBtn.classList.add('recording');
+                    voiceIcon.textContent = '⏹';
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        voiceStatus.textContent = '请稍后再试或检查麦克风权限';
+                        voiceStatus.className = 'small mt-1 text-warning';
+                        voiceBtn.classList.remove('recording');
+                        voiceIcon.textContent = '🎤';
+                    }
+                });
+
+                recognition.onresult = function(event) {
+                    var transcript = '';
+                    for (var i = event.resultIndex; i < event.results.length; i++) {
+                        transcript += event.results[i][0].transcript;
+                    }
+                    messageInput.value = messageInput.value ? (messageInput.value + transcript) : transcript;
+                    voiceStatus.textContent = '识别完成';
+                    voiceStatus.className = 'small mt-1 text-success';
+                    setTimeout(function() { voiceStatus.style.display = 'none'; }, 2000);
+                };
+
+                recognition.onend = function() {
+                    voiceBtn.classList.remove('recording');
+                    voiceIcon.textContent = '🎤';
+                    if (voiceStatus.textContent === '正在聆听…') {
+                        voiceStatus.textContent = '已结束';
+                        voiceStatus.className = 'small mt-1 text-muted';
+                        setTimeout(function() { voiceStatus.style.display = 'none'; }, 1000);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    voiceBtn.classList.remove('recording');
+                    voiceIcon.textContent = '🎤';
+                    voiceStatus.style.display = 'block';
+                    voiceStatus.className = 'small mt-1 text-warning';
+                    if (event.error === 'no-speech') {
+                        voiceStatus.textContent = '未检测到语音，请重试';
+                    } else if (event.error === 'not-allowed') {
+                        voiceStatus.textContent = '请允许使用麦克风';
+                    } else {
+                        voiceStatus.textContent = '识别出错: ' + event.error;
+                    }
+                    setTimeout(function() { voiceStatus.style.display = 'none'; }, 3000);
+                };
+            }
+        });
+    </script>
+}
+

@@ -1,0 +1,91 @@
+@model DiabetesPatientApp.ViewModels.FootPressureSuggestionViewModel
+
+@{
+    ViewData["Title"] = "足部压力建议单";
+    string GetStatusBadgeClass(string? status)
+    {
+        if (string.IsNullOrEmpty(status)) return "bg-secondary";
+        return status switch { "低风险" => "bg-success", "中风险" => "bg-warning", "高风险" => "bg-orange", "极高风险" => "bg-danger", _ => "bg-secondary" };
+    }
+}
+
+<style>
+    .badge.bg-orange { background-color: #fd7e14; color: #fff; }
+    .btn, .btn:hover, .btn:focus, .btn:active {
+        color: #fff !important;
+    }
+    .report-card { max-width: 720px; margin: 0 auto; border: 1px solid #dee2e6; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .report-title { background: #fff; color: #000; padding: 16px 24px; font-size: 20px; font-weight: 600; text-align: center; border-bottom: 1px solid #dee2e6; }
+    .report-body { padding: 24px; background: #fff; }
+    .report-section { margin-bottom: 22px; }
+    .report-section-title { font-size: 15px; font-weight: 600; color: #0b3a66; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #0b3a66; }
+    .suggestion-content { font-size: 14px; line-height: 1.85; color: #333; white-space: pre-line; }
+    .report-foot { display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; justify-content: center; flex-wrap: wrap; }
+    .summary-row { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-bottom: 16px; }
+    .summary-item { font-size: 14px; }
+    .summary-item strong { color: #495057; }
+    .generated-at { font-size: 12px; color: #6c757d; margin-top: 8px; }
+</style>
+
+<div class="container mt-4 mb-4">
+    <div class="row mb-3">
+        <div class="col"></div>
+        <div class="col-auto d-flex gap-2">
+            <a href="@Url.Action("Details", new { id = Model.RecordId })" class="btn btn-outline-secondary text-dark">返回报告单</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary">返回列表</a>
+        </div>
+    </div>
+    @if (TempData["SaveToFolderMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SaveToFolderMessage"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    <div class="report-card">
+        <div class="report-title">患者足部压力检测报告单</div>
+        <div class="report-body">
+            <div class="report-section">
+                <div class="report-section-title">患者与检测概要</div>
+                <div class="summary-row">
+                    <span class="summary-item"><strong>姓名：</strong>@(Model.PatientName ?? "—")</span>
+                    <span class="summary-item"><strong>年龄：</strong>@(Model.Age?.ToString() ?? "—") 岁</span>
+                    <span class="summary-item"><strong>左脚：</strong>@(Model.LeftPressure?.ToString("F2") ?? "—") kPa <span class="badge @GetStatusBadgeClass(Model.LeftStatus)">@(Model.LeftStatus ?? "—")</span></span>
+                    <span class="summary-item"><strong>右脚：</strong>@(Model.RightPressure?.ToString("F2") ?? "—") kPa <span class="badge @GetStatusBadgeClass(Model.RightStatus)">@(Model.RightStatus ?? "—")</span></span>
+                </div>
+                <p class="generated-at">建议生成时间：@Model.GeneratedAt.ToString("yyyy-MM-dd HH:mm")</p>
+            </div>
+
+            <div class="report-section">
+                <div class="report-section-title">一、日常行为建议</div>
+                <div class="suggestion-content">@Model.DailyBehaviorAdvice</div>
+            </div>
+
+            <div class="report-section">
+                <div class="report-section-title">二、随访建议</div>
+                <div class="suggestion-content">@Model.FollowUpAdvice</div>
+            </div>
+
+            <div class="report-section">
+                <div class="report-section-title">三、减压鞋垫选择建议</div>
+                <div class="suggestion-content">@Model.InsoleAdvice</div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.RiskPatternAdvice))
+            {
+                <div class="report-section">
+                    <div class="report-section-title">四、足部压力过载 / 步态 / 行走分析与建议</div>
+                    <div class="suggestion-content">@Model.RiskPatternAdvice</div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="report-foot">
+        <form method="post" action="@Url.Action("SaveSuggestionToFolder")" style="display:inline;">
+            <input type="hidden" name="recordId" value="@Model.RecordId">
+            <button type="submit" class="btn btn-primary">保存至文件夹</button>
+        </form>
+        <a href="@Url.Action("Doctors", "Consultation")" class="btn btn-primary">问医生</a>
+    </div>
+</div>

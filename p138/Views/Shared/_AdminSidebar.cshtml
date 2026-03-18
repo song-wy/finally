@@ -1,0 +1,11 @@
+@{
+	var action = (ViewContext.RouteData.Values["action"] as string) ?? "";
+	Func<string, string> isActive = a => string.Equals(action, a, System.StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+
+<a class="@isActive("Index")" href="@Url.Action("Index", "Admin")">管理员首页</a>
+<a class="@isActive("DataMaintenance")" href="@Url.Action("DataMaintenance","Admin")">数据维护</a>
+<a class="@isActive("Analytics")" href="@Url.Action("Analytics","Admin")">统计分析</a>
+<a class="@isActive("DocumentManagement")" href="@Url.Action("DocumentManagement","Admin")">资料管理</a>
+<a class="@isActive("Monitor")" href="@Url.Action("Monitor","Admin")">系统监控</a>
+

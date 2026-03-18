@@ -1,0 +1,127 @@
+@model DiabetesPatientApp.ViewModels.AdminDocumentManagementViewModel
+@using System.Linq
+@{
+	ViewData["Title"] = "资料管理";
+}
+
+<div class="container-fluid mt-3">
+	<div class="card shadow-sm border-0">
+		<div class="card-header bg-white">
+			<h5 class="mb-0">学习资料管理</h5>
+		</div>
+		<div class="card-body">
+			@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+			{
+				<div class="alert alert-info">@Model.StatusMessage</div>
+			}
+
+			<div class="upload-panel border rounded-3 p-5 bg-light text-center mb-4">
+				<form id="uploadForm" method="post" action="@Url.Action("UploadDocument","Admin")" enctype="multipart/form-data">
+					@Html.AntiForgeryToken()
+					<input type="file" name="uploadFiles" id="uploadFileInput" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp,.txt,.md,.markdown,.html,.htm" multiple>
+					<div class="mb-3 upload-icon">
+						<i class="bi bi-cloud-upload"></i>
+					</div>
+					<p class="mb-2 text-muted">将文件拖到此处，或 <a href="javascript:void(0);" id="uploadTrigger" class="text-primary text-decoration-none">上传到「糖尿病足护理的重要性」模块</a></p>
+					<small class="text-muted d-block mb-3">支持上传：图片（轮播）或文字资料（txt/md/html）。<strong>文字资料将显示在患者首页「糖尿病足护理的重要性」模块</strong>，单个文件 ≤ 100MB</small>
+					<button type="button" class="btn btn-primary" id="uploadButton">选择文件</button>
+				</form>
+			</div>
+
+			<div class="table-responsive mt-4">
+				<table class="table align-middle">
+					<thead class="table-light">
+						<tr>
+							<th>资料名称</th>
+							<th>分类</th>
+							<th>大小</th>
+							<th>上传时间</th>
+							<th class="text-center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model.Files.Any())
+						{
+							foreach (var file in Model.Files)
+							{
+								<tr>
+									<td class="fw-semibold">@file.DisplayName</td>
+									<td>@file.Category</td>
+									<td>@FormatSize(file.SizeBytes)</td>
+									<td>@file.UploadedAt.ToString("yyyy-MM-dd HH:mm")</td>
+									<td class="text-center">
+										<a class="btn btn-primary btn-sm text-white" href="@file.Url" download>下载</a>
+										@using (Html.BeginForm("DeleteDocument", "Admin", FormMethod.Post, new { @class = "d-inline-block ms-2" }))
+										{
+											@Html.AntiForgeryToken()
+											<input type="hidden" name="relativePath" value="@file.RelativePath" />
+											<button type="submit" class="btn btn-outline-danger btn-sm">撤回</button>
+										}
+									</td>
+								</tr>
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="5" class="text-center text-muted py-4">尚未上传任何资料，请先上传文件。</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+@functions{
+	private string FormatSize(long sizeBytes)
+	{
+		if (sizeBytes < 1024) return sizeBytes + " B";
+		double size = sizeBytes / 1024.0;
+		if (size < 1024) return size.ToString("0.#") + " KB";
+		size /= 1024.0;
+		return size.ToString("0.#") + " MB";
+	}
+}
+
+<style>
+	.upload-panel {
+		min-height: 220px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.upload-panel .upload-icon {
+		font-size: 3rem;
+		color: #0b3a66;
+	}
+</style>
+
+@section Scripts {
+	<script>
+		(function () {
+			const trigger = document.getElementById('uploadTrigger');
+			const button = document.getElementById('uploadButton');
+			const input = document.getElementById('uploadFileInput');
+			const form = document.getElementById('uploadForm');
+
+			if (!input || !form) return;
+
+			const openPicker = () => input.click();
+			trigger?.addEventListener('click', function (e) {
+				e.preventDefault();
+				openPicker();
+			});
+			button?.addEventListener('click', openPicker);
+
+			input.addEventListener('change', function () {
+				if (input.files && input.files.length > 0) {
+					form.submit();
+				}
+			});
+		})();
+	</script>
+}
+

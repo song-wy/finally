@@ -1,0 +1,57 @@
+@model DiabetesPatientApp.ViewModels.AdminDataMaintenanceViewModel
+@{
+	ViewData["Title"] = "维护概览";
+}
+
+<div class="container-fluid mt-3">
+	<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+		<div>
+			<h4 class="mb-0">维护概览</h4>
+			<small class="text-muted">查看系统运行健康状态，快速了解需要处理的任务。</small>
+		</div>
+		<a class="btn btn-outline-primary" asp-action="DataMaintenance">返回数据维护中心</a>
+	</div>
+
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">关键指标</h5>
+			<p class="card-text text-muted">结合患者数据库数据，评估当前需要处理的维护任务。</p>
+			<div class="row g-3">
+				<div class="col-sm-6 col-xl-3">
+					<div class="p-3 border rounded bg-light">
+						<div class="fw-semibold text-primary">停用患者</div>
+						<div class="display-6">@Model.InactivePatientCount</div>
+						<small class="text-muted">建议核查停用原因</small>
+					</div>
+				</div>
+				<div class="col-sm-6 col-xl-3">
+					<div class="p-3 border rounded bg-light">
+						<div class="fw-semibold text-primary">激活提醒</div>
+						<div class="display-6">@Model.PendingReminderCount</div>
+						<small class="text-muted">涵盖血糖/用药提醒</small>
+					</div>
+				</div>
+				<div class="col-sm-6 col-xl-3">
+					<div class="p-3 border rounded bg-light">
+						<div class="fw-semibold text-primary">未读问诊</div>
+						<div class="display-6">@Model.OldConsultationMessageCount</div>
+						<small class="text-muted">建议尽快回复</small>
+					</div>
+				</div>
+				<div class="col-sm-6 col-xl-3">
+					<div class="p-3 border rounded bg-light">
+						<div class="fw-semibold text-primary">最近患者登录</div>
+						<div class="display-6">@((Model.LastPatientLogin?.ToString("MM-dd HH:mm")) ?? "暂无记录")</div>
+						<small class="text-muted">掌握患者活跃度</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="alert alert-info">
+		如需对患者与医生信息进行维护、备份或恢复操作，请返回“数据维护中心”页面。
+	</div>
+</div>
+
+

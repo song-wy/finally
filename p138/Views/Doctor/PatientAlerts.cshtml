@@ -1,0 +1,105 @@
+@model DiabetesPatientApp.ViewModels.DoctorPatientAlertsPageViewModel
+@{
+    ViewData["Title"] = "高危患者预警";
+}
+
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>高危患者预警</h2>
+            <p class="text-muted small mb-0">以下为患者端在 <strong>@Model.DateRangeText</strong> 内触发的预警汇总；<strong>最新预警消息</strong>由患者端异常数据自动推送至本页，便于您跟进高危患者。</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <span class="fw-bold">高危患者预警</span>
+            <span class="badge bg-primary ms-2">患者端异常自动推送</span>
+        </div>
+        <div class="card-body">
+            @if (Model.Patients.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>患者</th>
+                                <th>联系电话</th>
+                                <th class="text-center">血糖异常</th>
+                                <th class="text-center">足压高风险</th>
+                                <th class="text-center">伤口异常</th>
+                                <th>最近触发时间</th>
+                                <th>最新推送消息</th>
+                                <th class="text-end">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model.Patients)
+                            {
+                                <tr>
+                                    <td>@p.DisplayName</td>
+                                    <td>@(string.IsNullOrWhiteSpace(p.PhoneNumber) ? "未留" : p.PhoneNumber)</td>
+                                    <td class="text-center">
+                                        @if (p.BloodSugarAlertCount > 0)
+                                        {
+                                            <span class="badge bg-danger">@p.BloodSugarAlertCount 条</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (p.FootPressureAlertCount > 0)
+                                        {
+                                            <span class="badge bg-warning text-dark">@p.FootPressureAlertCount 条</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (p.WoundAlertCount > 0)
+                                        {
+                                            <span class="badge bg-danger">@p.WoundAlertCount 条</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>@(p.LatestAlertDate.HasValue ? p.LatestAlertDate.Value.ToString("yyyy-MM-dd HH:mm") : "—")</td>
+                                    <td class="small">
+                                        @if (p.LatestPush != null)
+                                        {
+                                            <span class="text-muted">@p.LatestPush.CreatedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                                            <span class="badge @(p.LatestPush.AlertType == "FootPressureHigh" ? "bg-warning text-dark" : "bg-danger") ms-1">@p.LatestPush.AlertTypeDisplay</span>
+                                            @p.LatestPush.Summary
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <form class="d-inline" method="post" action="@Url.Action("AddPatientToFocusGroup", "Doctor")">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="patientId" value="@p.PatientId" />
+                                            <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+                                            <button type="submit" class="btn btn-sm btn-primary text-white">列为重点关注对象</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">当前统计周期内暂无患者端触发的预警记录；患者端异常数据将自动推送至本表。</p>
+            }
+        </div>
+    </div>
+</div>

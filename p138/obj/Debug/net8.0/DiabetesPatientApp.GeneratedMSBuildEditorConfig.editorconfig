@@ -1,0 +1,281 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = DiabetesPatientApp
+build_property.RootNamespace = DiabetesPatientApp
+build_property.ProjectDir = E:\桌面\软工+大创\毕业设计\DiaBetes\p138\p138\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\桌面\软工+大创\毕业设计\DiaBetes\p138\p138
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/Analytics.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQW5hbHl0aWNzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/DataMaintenance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGF0YU1haW50ZW5hbmNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/DataMaintenanceOverview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGF0YU1haW50ZW5hbmNlT3ZlcnZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/DocumentManagement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRG9jdW1lbnRNYW5hZ2VtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Admin/Monitor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTW9uaXRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Alert/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxlcnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/BloodSugar/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RTdWdhclxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/BloodSugar/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RTdWdhclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/BloodSugar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RTdWdhclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/BloodSugar/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RTdWdhclxSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/BloodSugar/Trend.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RTdWdhclxUcmVuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Community/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbXVuaXR5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Community/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbXVuaXR5XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Community/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbXVuaXR5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/Chat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXENoYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/Doctors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXERvY3RvcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/FillQuestionnaire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXEZpbGxRdWVzdGlvbm5haXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/QuestionnaireResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXFF1ZXN0aW9ubmFpcmVSZXN1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/Unread.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXFVucmVhZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Consultation/ViewCollectedQuestionnaire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGF0aW9uXFZpZXdDb2xsZWN0ZWRRdWVzdGlvbm5haXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Dashboard/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Dashboard/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Dashboard/Statistics.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFN0YXRpc3RpY3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/CustomGroups.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXEN1c3RvbUdyb3Vwcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/FollowUps.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXEZvbGxvd1Vwcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/MultidisciplinaryConsultation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXE11bHRpZGlzY2lwbGluYXJ5Q29uc3VsdGF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/MultidisciplinaryConsultationChat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXE11bHRpZGlzY2lwbGluYXJ5Q29uc3VsdGF0aW9uQ2hhdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Notifications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXE5vdGlmaWNhdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Orders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXE9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Partials/_PatientArchiveBasicInfoPanel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhcnRpYWxzXF9QYXRpZW50QXJjaGl2ZUJhc2ljSW5mb1BhbmVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Partials/_PatientArchiveLatestHealthPanel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhcnRpYWxzXF9QYXRpZW50QXJjaGl2ZUxhdGVzdEhlYWx0aFBhbmVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/Partials/_PatientArchiveRecentMessagesPanel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhcnRpYWxzXF9QYXRpZW50QXJjaGl2ZVJlY2VudE1lc3NhZ2VzUGFuZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/PatientAlerts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhdGllbnRBbGVydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/PatientArchive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhdGllbnRBcmNoaXZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Doctor/PatientArchives.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXFBhdGllbnRBcmNoaXZlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Education/DoctorManage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uXERvY3Rvck1hbmFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Education/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/FootPressure/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdFByZXNzdXJlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/FootPressure/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdFByZXNzdXJlXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/FootPressure/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdFByZXNzdXJlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/FootPressure/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdFByZXNzdXJlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/FootPressure/Suggestion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdFByZXNzdXJlXFN1Z2dlc3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/MedicalExperience/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbEV4cGVyaWVuY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/ChatReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcQ2hhdFJlbWluZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/FootPressureReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcRm9vdFByZXNzdXJlUmVtaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Reminder/WoundReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVtaW5kZXJcV291bmRSZW1pbmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Shared/_AdminSidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pblNpZGViYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Shared/_DoctorSidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Eb2N0b3JTaWRlYmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Tasks/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Wound/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV291bmRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Wound/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV291bmRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Wound/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV291bmRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/Wound/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV291bmRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/桌面/软工+大创/毕业设计/DiaBetes/p138/p138/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

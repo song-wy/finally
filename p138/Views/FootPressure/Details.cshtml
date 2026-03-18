@@ -1,0 +1,122 @@
+@model DiabetesPatientApp.Models.FootPressureRecord
+
+@{
+    ViewData["Title"] = "患者足部压力检测报告单";
+    var user = Model.User;
+    var age = user?.DateOfBirth == null ? (int?)null : (int)((DateTime.Now - user.DateOfBirth.Value).TotalDays / 365.25);
+    string GetStatusBadgeClass(string? status)
+    {
+        if (string.IsNullOrEmpty(status)) return "bg-secondary";
+        return status switch { "低风险" => "bg-success", "中风险" => "bg-warning", "高风险" => "bg-orange", "极高风险" => "bg-danger", _ => "bg-secondary" };
+    }
+}
+
+<style>
+    .badge.bg-orange { background-color: #fd7e14; color: #fff; }
+    .btn, .btn:hover, .btn:focus, .btn:active {
+        color: #fff !important;
+    }
+    .report-card { max-width: 640px; margin: 0 auto; border: 1px solid #dee2e6; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .report-title { background: #fff; color: #000; padding: 16px 24px; font-size: 20px; font-weight: 600; text-align: center; border-bottom: 1px solid #dee2e6; }
+    .report-body { padding: 24px; background: #fff; }
+    .report-section { margin-bottom: 20px; }
+    .report-section:last-child { margin-bottom: 0; }
+    .report-section-title { font-size: 14px; color: #6c757d; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #eee; }
+    .report-row { display: flex; flex-wrap: wrap; gap: 24px 32px; }
+    .report-item { min-width: 140px; }
+    .report-item label { display: block; font-size: 12px; color: #6c757d; margin-bottom: 2px; }
+    .report-item .value { font-size: 15px; font-weight: 500; color: #212529; }
+    .report-foot { display: flex; gap: 16px; margin-top: 24px; padding-top: 16px; justify-content: center; flex-wrap: wrap; }
+</style>
+
+<div class="container mt-4 mb-4">
+    <div class="row mb-3">
+        <div class="col"></div>
+        <div class="col-auto">
+            <a href="@Url.Action("Index")" class="btn btn-primary">返回列表</a>
+        </div>
+    </div>
+    <div class="report-card">
+        <div class="report-title">患者足部压力检测报告单</div>
+        <div class="report-body">
+            <div class="report-section">
+                <div class="report-section-title">患者信息</div>
+                <div class="report-row">
+                    <div class="report-item">
+                        <label>姓名</label>
+                        <div class="value">@(user?.FullName ?? "—")</div>
+                    </div>
+                    <div class="report-item">
+                        <label>年龄</label>
+                        <div class="value">@(age?.ToString() ?? "—") 岁</div>
+                    </div>
+                    <div class="report-item">
+                        <label>身份信息</label>
+                        <div class="value">@(user?.UserType == "Patient" ? "患者" : user?.UserType == "Doctor" ? "医生" : user?.UserType ?? "—") / @(user?.Username ?? "—")</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <div class="report-section-title">足部压力数据</div>
+                <div class="report-row">
+                    <div class="report-item">
+                        <label>左脚压力值</label>
+                        <div class="value">
+                            @if (Model.LeftFootPressure.HasValue)
+                            {
+                                <span>@Model.LeftFootPressure.Value.ToString("F2") kPa</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">未测量</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="report-item">
+                        <label>左脚状态</label>
+                        <div class="value">
+                            @if (!string.IsNullOrEmpty(Model.LeftFootStatus))
+                            {
+                                <span class="badge @GetStatusBadgeClass(Model.LeftFootStatus)">@Model.LeftFootStatus</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="report-item">
+                        <label>右脚压力值</label>
+                        <div class="value">
+                            @if (Model.RightFootPressure.HasValue)
+                            {
+                                <span>@Model.RightFootPressure.Value.ToString("F2") kPa</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">未测量</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="report-item">
+                        <label>右脚状态</label>
+                        <div class="value">
+                            @if (!string.IsNullOrEmpty(Model.RightFootStatus))
+                            {
+                                <span class="badge @GetStatusBadgeClass(Model.RightFootStatus)">@Model.RightFootStatus</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="report-foot">
+        <a href="@Url.Action("Suggestion", new { id = Model.FootPressureId })" class="btn btn-success">AI 分析 · 获取建议</a>
+    </div>
+</div>

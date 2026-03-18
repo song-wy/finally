@@ -1,0 +1,1773 @@
+{
+  "Version": 1,
+  "Hash": "LodCchcWxkoSO/9CKsOf0kPn166/UvIKSy3QV6PyHYY=",
+  "Source": "DiabetesPatientApp",
+  "BasePath": "_content/DiabetesPatientApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "DiabetesPatientApp\\wwwroot",
+      "Source": "DiabetesPatientApp",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090184493919183.docx",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/7_639090184493919183#[.{fingerprint}]?.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "q2tcfe35fz",
+      "Integrity": "MvW9jisv+mcZo5RcOEaRW7Fafx4DkKlmRqH+mcQeAcQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\7_639090184493919183.docx"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090196626847604.png",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/7_639090196626847604#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xk8r9fwod3",
+      "Integrity": "Mam6MiqmS1U2liFplc3KB5o1a58gAd4DB0Xs///DOf8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\7_639090196626847604.png"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094492724860095.png",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/7_639094492724860095#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "182rm6zm8n",
+      "Integrity": "AaIzMvJRCqVAm9auuRPfSKSpAoD3SSGttlrmcGzhxd8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\7_639094492724860095.png"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094659149198243.png",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/7_639094659149198243#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cnxhbrlr7l",
+      "Integrity": "mAveN8vcWAtSJkoQrTnaJLz3sYgEJJrZadnRSTjDAiE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\7_639094659149198243.png"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086936816325484.jpeg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/76_639086936816325484#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "42wcidxts2",
+      "Integrity": "TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\76_639086936816325484.jpeg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086937233647327.pdf",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/consultation/76_639086937233647327#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "e1mocjw9lb",
+      "Integrity": "kn2iFV93ZIJtHAbT32D8T4I1HFQc0iE5ORROxNwQG0A=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\consultation\\76_639086937233647327.pdf"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\docs\\20251113180607236_图片.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/docs/20251113180607236_图片#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "db13kn8z40",
+      "Integrity": "abmmhUFFuHVpoLyj0Wt7IP1wBBGe6G01JyV4eM9NKFY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\docs\\20251113180607236_图片.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/education/20260318201059_f45436252d364999a94bd403b8d7f17b#[.{fingerprint}]?.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dpg4pow8yv",
+      "Integrity": "b7kK8+94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639088666336723322.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/3_639088666336723322#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "n49046ej9g",
+      "Integrity": "NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\3_639088666336723322.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639090922779358577.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/3_639090922779358577#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "n49046ej9g",
+      "Integrity": "NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\3_639090922779358577.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639093513171420543.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/3_639093513171420543#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jzpfcve689",
+      "Integrity": "sQYDpnKf/SDyfl42vkpLwE/Z8F6rGJyjwu1FxDXY+IA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\3_639093513171420543.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985477458193660.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_638985477458193660#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9wydk43u0n",
+      "Integrity": "Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_638985477458193660.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985528365542425.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_638985528365542425#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9wydk43u0n",
+      "Integrity": "Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_638985528365542425.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086770454131201.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_639086770454131201#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "42wcidxts2",
+      "Integrity": "TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_639086770454131201.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086773192482052.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_639086773192482052#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "42wcidxts2",
+      "Integrity": "TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_639086773192482052.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086774722895297.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_639086774722895297#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "unz7e5b2lv",
+      "Integrity": "SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_639086774722895297.jpg"
+    },
+    {
+      "Identity": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086926285140986.jpg",
+      "SourceId": "DiabetesPatientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\",
+      "BasePath": "_content/DiabetesPatientApp",
+      "RelativePath": "uploads/wounds/76_639086926285140986#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "unz7e5b2lv",
+      "Integrity": "SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wounds\\76_639086926285140986.jpg"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "uploads/consultation/7_639090184493919183.docx",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090184493919183.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2033"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MvW9jisv+mcZo5RcOEaRW7Fafx4DkKlmRqH+mcQeAcQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 13 Mar 2026 09:07:30 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-MvW9jisv+mcZo5RcOEaRW7Fafx4DkKlmRqH+mcQeAcQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639090184493919183.q2tcfe35fz.docx",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090184493919183.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2033"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MvW9jisv+mcZo5RcOEaRW7Fafx4DkKlmRqH+mcQeAcQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 13 Mar 2026 09:07:30 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "q2tcfe35fz"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/7_639090184493919183.docx"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-MvW9jisv+mcZo5RcOEaRW7Fafx4DkKlmRqH+mcQeAcQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639090196626847604.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090196626847604.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mam6MiqmS1U2liFplc3KB5o1a58gAd4DB0Xs///DOf8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 13 Mar 2026 09:27:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mam6MiqmS1U2liFplc3KB5o1a58gAd4DB0Xs///DOf8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639090196626847604.xk8r9fwod3.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090196626847604.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mam6MiqmS1U2liFplc3KB5o1a58gAd4DB0Xs///DOf8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 13 Mar 2026 09:27:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xk8r9fwod3"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/7_639090196626847604.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mam6MiqmS1U2liFplc3KB5o1a58gAd4DB0Xs///DOf8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639094492724860095.182rm6zm8n.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094492724860095.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AaIzMvJRCqVAm9auuRPfSKSpAoD3SSGttlrmcGzhxd8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 08:47:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "182rm6zm8n"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/7_639094492724860095.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AaIzMvJRCqVAm9auuRPfSKSpAoD3SSGttlrmcGzhxd8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639094492724860095.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094492724860095.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AaIzMvJRCqVAm9auuRPfSKSpAoD3SSGttlrmcGzhxd8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 08:47:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AaIzMvJRCqVAm9auuRPfSKSpAoD3SSGttlrmcGzhxd8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639094659149198243.cnxhbrlr7l.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094659149198243.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2036"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mAveN8vcWAtSJkoQrTnaJLz3sYgEJJrZadnRSTjDAiE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 13:25:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cnxhbrlr7l"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/7_639094659149198243.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mAveN8vcWAtSJkoQrTnaJLz3sYgEJJrZadnRSTjDAiE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/7_639094659149198243.png",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094659149198243.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2036"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mAveN8vcWAtSJkoQrTnaJLz3sYgEJJrZadnRSTjDAiE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 13:25:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-mAveN8vcWAtSJkoQrTnaJLz3sYgEJJrZadnRSTjDAiE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/76_639086936816325484.42wcidxts2.jpeg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086936816325484.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:54:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "42wcidxts2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/76_639086936816325484.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/76_639086936816325484.jpeg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086936816325484.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:54:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/76_639086937233647327.e1mocjw9lb.pdf",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086937233647327.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "964335"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kn2iFV93ZIJtHAbT32D8T4I1HFQc0iE5ORROxNwQG0A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:55:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "e1mocjw9lb"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/consultation/76_639086937233647327.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-kn2iFV93ZIJtHAbT32D8T4I1HFQc0iE5ORROxNwQG0A="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/consultation/76_639086937233647327.pdf",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086937233647327.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "964335"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kn2iFV93ZIJtHAbT32D8T4I1HFQc0iE5ORROxNwQG0A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:55:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-kn2iFV93ZIJtHAbT32D8T4I1HFQc0iE5ORROxNwQG0A="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/docs/20251113180607236_图片.db13kn8z40.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\docs\\20251113180607236_图片.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "129490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"abmmhUFFuHVpoLyj0Wt7IP1wBBGe6G01JyV4eM9NKFY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 13 Nov 2025 10:06:08 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "db13kn8z40"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/docs/20251113180607236_图片.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-abmmhUFFuHVpoLyj0Wt7IP1wBBGe6G01JyV4eM9NKFY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/docs/20251113180607236_图片.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\docs\\20251113180607236_图片.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "129490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"abmmhUFFuHVpoLyj0Wt7IP1wBBGe6G01JyV4eM9NKFY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 13 Nov 2025 10:06:08 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-abmmhUFFuHVpoLyj0Wt7IP1wBBGe6G01JyV4eM9NKFY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/education/20260318201059_f45436252d364999a94bd403b8d7f17b.docx",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16035"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"b7kK8+94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 12:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-b7kK8+94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/education/20260318201059_f45436252d364999a94bd403b8d7f17b.dpg4pow8yv.docx",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16035"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"b7kK8+94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 12:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dpg4pow8yv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/education/20260318201059_f45436252d364999a94bd403b8d7f17b.docx"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-b7kK8+94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639088666336723322.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639088666336723322.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27706"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 11 Mar 2026 14:57:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639088666336723322.n49046ej9g.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639088666336723322.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27706"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 11 Mar 2026 14:57:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n49046ej9g"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/3_639088666336723322.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639090922779358577.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639090922779358577.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27706"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 14 Mar 2026 05:37:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639090922779358577.n49046ej9g.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639090922779358577.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27706"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 14 Mar 2026 05:37:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n49046ej9g"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/3_639090922779358577.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NyqBNcFLb1k4gMhq8PLBdXzDFZ2mN1dnwdMVb1ILYJA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639093513171420543.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639093513171420543.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1108592"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sQYDpnKf/SDyfl42vkpLwE/Z8F6rGJyjwu1FxDXY+IA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Mar 2026 05:35:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sQYDpnKf/SDyfl42vkpLwE/Z8F6rGJyjwu1FxDXY+IA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/3_639093513171420543.jzpfcve689.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639093513171420543.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1108592"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sQYDpnKf/SDyfl42vkpLwE/Z8F6rGJyjwu1FxDXY+IA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Mar 2026 05:35:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jzpfcve689"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/3_639093513171420543.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sQYDpnKf/SDyfl42vkpLwE/Z8F6rGJyjwu1FxDXY+IA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_638985477458193660.9wydk43u0n.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985477458193660.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33286"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Nov 2025 04:35:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9wydk43u0n"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_638985477458193660.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_638985477458193660.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985477458193660.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33286"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Nov 2025 04:35:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_638985528365542425.9wydk43u0n.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985528365542425.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33286"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Nov 2025 06:00:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9wydk43u0n"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_638985528365542425.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_638985528365542425.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985528365542425.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33286"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Nov 2025 06:00:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fzp2a7fDfPTma6eCLGmwRqk0NKluUIUYnrZ9BXfho8Y="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086770454131201.42wcidxts2.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086770454131201.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:17:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "42wcidxts2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_639086770454131201.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086770454131201.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086770454131201.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:17:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086773192482052.42wcidxts2.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086773192482052.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:22:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "42wcidxts2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_639086773192482052.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086773192482052.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086773192482052.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "36531"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:22:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TCMDuYIfaCUPMqMFsWzQ/aqbrYwk9BZ8AzhDplUPFKk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086774722895297.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086774722895297.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33054"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:24:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086774722895297.unz7e5b2lv.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086774722895297.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33054"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 10:24:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "unz7e5b2lv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_639086774722895297.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086926285140986.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086926285140986.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33054"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:37:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/wounds/76_639086926285140986.unz7e5b2lv.jpg",
+      "AssetFile": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086926285140986.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "33054"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Mar 2026 14:37:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "unz7e5b2lv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/wounds/76_639086926285140986.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SuIkMWw21j4OchIkOqWkF8l5q1hvmopIrwI+cSR8zic="
+        }
+      ]
+    }
+  ]
+}

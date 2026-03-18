@@ -1,0 +1,86 @@
+@model IEnumerable<DiabetesPatientApp.ViewModels.DoctorPatientSummary>
+
+@{
+    ViewData["Title"] = "患者管理列表";
+}
+
+<div class="container-fluid py-4 mb-5" style="background-color: #f8f9fa;">
+    <!-- 1. 顶部：搜索和标题区域 -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h4 class="fw-bold text-dark">患者档案管理</h4>
+            <p class="text-secondary small">在这里管理您的患者。</p>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group shadow-sm border-0">
+                <input type="text" class="form-control" placeholder="搜索姓名" id="patientSearchInput">
+                <button class="btn btn-primary px-4">搜索</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 患者卡片展示区 -->
+    <div class="row g-4">
+        @foreach (var p in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 transition-card">
+                    <div class="card-body p-4 text-center">
+                        <!-- 头像圈：使用了更简单的取字逻辑 -->
+                        <div class="mx-auto rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary fw-bold mb-3" 
+                             style="width: 60px; height: 60px; font-size: 1.2rem;">
+                            @(string.IsNullOrEmpty(p.DisplayName) ? "P" : p.DisplayName.Substring(0, 1))
+                        </div>
+
+                        <h5 class="fw-bold mb-1">@(p.DisplayName ?? "匿名患者")</h5>
+                        <div class="badge bg-success-subtle text-success rounded-pill px-3 mb-3">活跃中</div>
+
+                        <div class="text-start small text-muted mb-4 bg-light p-3 rounded">
+                            <!-- 移除了 Substring(0, 8)，直接显示完整 ID 避免报错 -->
+                            <div class="mb-2"><strong>账户 ID:</strong> @p.UserId</div>
+                            <div class="mb-2"><strong>联系电话:</strong> @(p.PhoneNumber ?? "未记录")</div>
+                            <div><strong>注册时间:</strong> @p.CreatedDate.ToString("yyyy-MM-dd")</div>
+                        </div>
+
+                        <div class="d-grid gap-2 border-top pt-3">
+                            <a href="@Url.Action("PatientArchive", "Doctor", new { patientId = p.UserId })" 
+                               class="btn btn-primary btn-sm rounded-pill py-2 fw-bold">查看详细记录</a>
+                            <a href="@Url.Action("Chat", "Consultation", new { doctorId = p.UserId })" 
+                               class="btn btn-outline-primary btn-sm rounded-pill py-2">发送消息</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .transition-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .transition-card:hover { transform: translateY(-5px); box-shadow: 0 .5rem 1.5rem rgba(0,0,0,0.1) !important; }
+</style>
+
+<script>
+    // 这段脚本负责处理搜索逻辑
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('patientSearchInput');
+        const cards = document.querySelectorAll('.col-12.col-md-6.col-lg-4.col-xl-3');
+
+        // 监听输入框的打字动作
+        searchInput.addEventListener('input', function () {
+            const searchText = searchInput.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                // 获取卡片里的所有文字
+                const cardText = card.innerText.toLowerCase();
+
+                // 如果卡片文字包含搜索内容，就显示；否则隐藏
+                if (cardText.includes(searchText)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+</script>

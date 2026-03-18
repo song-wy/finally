@@ -1,0 +1,68 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "每日任务";
+    var today = (DateTime)(ViewBag.Today ?? DateTime.Today);
+    var list = (Model ?? Enumerable.Empty<dynamic>()).ToList();
+}
+
+<div class="container-fluid mt-3">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">每日任务</h4>
+            <div class="text-muted small">按医生医嘱生成的今日打卡任务（@today.ToString("yyyy-MM-dd")）。</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header fw-semibold">今日打卡</div>
+        <div class="card-body">
+            @if (list.Count == 0)
+            {
+                <div class="text-muted">今日暂无任务。</div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var t in list)
+                    {
+                        bool done = t.IsCompleted;
+                        <div class="list-group-item d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <div class="fw-semibold">@t.Category</div>
+                                <div class="text-muted small">@t.Content</div>
+                                @if (done && t.CompletedAt != null)
+                                {
+                                    <div class="text-success small mt-1">已完成：@(((DateTime)t.CompletedAt).ToString("HH:mm"))</div>
+                                }
+                            </div>
+                            <div class="text-end">
+                                @if (done)
+                                {
+                                    <span class="badge bg-success">已打卡</span>
+                                }
+                                else
+                                {
+                                    <form method="post" action="@Url.Action("Complete", "Tasks")">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@t.PatientDailyTaskId" />
+                                        <button type="submit" class="btn btn-sm btn-primary text-white">完成打卡</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

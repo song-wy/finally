@@ -1,0 +1,123 @@
+@model DiabetesPatientApp.ViewModels.AdminDashboardViewModel
+@using System.Linq
+@{
+	ViewData["Title"] = "管理员主页";
+}
+
+<div class="container-fluid mt-3">
+	<div class="card mb-3">
+		<div class="card-header fw-bold text-primary">数据时间轴</div>
+		<div class="card-body">
+			<p class="text-muted small mb-3">以下为最近 7 天内高危足预警、换药量、血糖值、伤口上传数、足压记录数、患者数、医生数的累计变化。</p>
+			<div class="timeline-chart-wrapper" style="position:relative; height:280px;">
+				<canvas id="timelineChart"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div class="row g-3">
+		<div class="col-md-6">
+			<div class="card h-100">
+				<div class="card-header">最新注册患者</div>
+				@if (Model.RecentPatients.Any())
+				{
+					<ul class="list-group list-group-flush">
+						@foreach (var patient in Model.RecentPatients)
+						{
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+								<div>
+									<div class="fw-semibold">@patient.FullName</div>
+									<small class="text-muted">ID：@patient.UserId · 性别：@(patient.Gender ?? "未填写")</small>
+									<small class="text-muted">@patient.CreatedDate.ToString("yyyy-MM-dd HH:mm")</small>
+								</div>
+								<div class="text-end">
+									<small class="d-block text-muted">电话：@(string.IsNullOrWhiteSpace(patient.PhoneNumber) ? "未留" : patient.PhoneNumber)</small>
+									<span class="badge @(patient.IsActive ? "bg-success" : "bg-secondary")">@((patient.IsActive ? "活跃" : "停用"))</span>
+								</div>
+							</li>
+						}
+					</ul>
+				}
+				else
+				{
+					<div class="card-body text-muted">暂无新患者数据。</div>
+				}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card h-100">
+				<div class="card-header">最近新增医生</div>
+				@if (Model.RecentDoctors.Any())
+				{
+					<ul class="list-group list-group-flush">
+						@foreach (var doctor in Model.RecentDoctors)
+						{
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+								<div>
+									<div class="fw-semibold">@doctor.FullName</div>
+									<small class="text-muted">ID：@doctor.UserId · 性别：@(doctor.Gender ?? "未填写")</small>
+									<small class="text-muted">@doctor.CreatedDate.ToString("yyyy-MM-dd HH:mm")</small>
+								</div>
+								<div class="text-end">
+									<small class="d-block text-muted">电话：@(string.IsNullOrWhiteSpace(doctor.PhoneNumber) ? "未留" : doctor.PhoneNumber)</small>
+									<span class="badge @(doctor.IsActive ? "bg-success" : "bg-secondary")">@((doctor.IsActive ? "活跃" : "停用"))</span>
+								</div>
+							</li>
+						}
+					</ul>
+				}
+				else
+				{
+					<div class="card-body text-muted">暂无医生数据。</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+	<script>
+		(function () {
+			const labels = @Html.Raw(Json.Serialize(Model.TimelineLabels));
+			const highRiskFootData = @Html.Raw(Json.Serialize(Model.TimelineHighRiskFootCounts));
+			const dressingData = @Html.Raw(Json.Serialize(Model.TimelineDressingCounts));
+			const bloodSugarData = @Html.Raw(Json.Serialize(Model.TimelineBloodSugarCounts));
+			const woundData = @Html.Raw(Json.Serialize(Model.TimelineWoundCounts));
+			const footPressureData = @Html.Raw(Json.Serialize(Model.TimelineFootPressureCounts));
+			const patientData = @Html.Raw(Json.Serialize(Model.TimelinePatientCounts));
+			const doctorData = @Html.Raw(Json.Serialize(Model.TimelineDoctorCounts));
+			const ctx = document.getElementById('timelineChart');
+			if (!ctx) return;
+			new Chart(ctx.getContext('2d'), {
+				type: 'line',
+				data: {
+					labels: labels,
+					datasets: [
+						{ label: '高危足预警', data: highRiskFootData, borderColor: 'rgb(220, 53, 69)', backgroundColor: 'rgba(220, 53, 69, 0.1)', fill: true, tension: 0.3 },
+						{ label: '换药量', data: dressingData, borderColor: 'rgb(253, 126, 20)', backgroundColor: 'rgba(253, 126, 20, 0.1)', fill: true, tension: 0.3 },
+						{ label: '血糖值', data: bloodSugarData, borderColor: 'rgb(255, 193, 7)', backgroundColor: 'rgba(255, 193, 7, 0.1)', fill: true, tension: 0.3 },
+						{ label: '伤口上传数', data: woundData, borderColor: 'rgb(111, 66, 193)', backgroundColor: 'rgba(111, 66, 193, 0.1)', fill: true, tension: 0.3 },
+						{ label: '足压记录数', data: footPressureData, borderColor: 'rgb(13, 202, 240)', backgroundColor: 'rgba(13, 202, 240, 0.1)', fill: true, tension: 0.3 },
+						{ label: '患者数', data: patientData, borderColor: 'rgb(13, 110, 253)', backgroundColor: 'rgba(13, 110, 253, 0.1)', fill: true, tension: 0.3 },
+						{ label: '医生数', data: doctorData, borderColor: 'rgb(25, 135, 84)', backgroundColor: 'rgba(25, 135, 84, 0.1)', fill: true, tension: 0.3 }
+					]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					interaction: { mode: 'index', intersect: false },
+					plugins: {
+						legend: { position: 'top' },
+						tooltip: { backgroundColor: '#072a4b', titleColor: '#fff', bodyColor: '#fff' }
+					},
+					scales: {
+						x: { grid: { display: false }, ticks: { maxRotation: 45, minRotation: 0 } },
+						y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,.06)' }, ticks: { precision: 0 } }
+					}
+				}
+			});
+		})();
+	</script>
+}
+

@@ -1,0 +1,60 @@
+@model DiabetesPatientApp.Models.Reminder
+
+@{
+    ViewData["Title"] = "编辑血糖记录提醒内容";
+}
+
+<div class="mt-3 px-3">
+    <div class="row mb-3">
+        <div class="col"><h4 class="mb-0">编辑血糖记录提醒内容</h4></div>
+        <div class="col-auto d-flex gap-2">
+            <a href="@Url.Action("Create")" class="btn btn-outline-primary text-white">返回血糖记录提醒内容</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a>
+        </div>
+    </div>
+
+    @{
+        var range = Model.MealType switch
+        {
+            "Fasting" => "06:00 - 08:00",
+            "AfterMeal1" => "10:00 - 11:00",
+            "AfterMeal2" => "13:00 - 14:00",
+            "AfterMeal3" => "20:00 - 22:00",
+            _ => "—"
+        };
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                @foreach (var error in modelState.Errors)
+                {
+                    <p class="mb-0">@error.ErrorMessage</p>
+                }
+            }
+        </div>
+    }
+
+    <form method="post" class="row g-3">
+        <input type="hidden" name="id" value="@Model.ReminderId" />
+        <input type="hidden" name="isActive" value="@(Model.IsActive ? "true" : "false")" />
+
+        <div class="col-12">
+            <label class="form-label">提醒时间段</label>
+            <input type="text" class="form-control" value="@range" disabled />
+            <small class="text-muted">系统默认时间段，不可修改</small>
+        </div>
+
+        <div class="col-12">
+            <label for="reminderTime" class="form-label">提醒时间</label>
+            <input type="time" class="form-control" id="reminderTime" name="reminderTime" value="@Model.ReminderTime.ToString(@"hh\:mm")" required />
+            <small class="text-muted">可在上述时间段内修改为具体提醒时间</small>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary text-white me-2">保存</button>
+        </div>
+    </form>
+</div>

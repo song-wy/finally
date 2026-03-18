@@ -1,0 +1,115 @@
+@using System.Text.Json
+@model Tuple<DiabetesPatientApp.ViewModels.AiQuestionnaireViewModel?, string>
+
+@{
+    ViewData["Title"] = "查看收集的问卷";
+    var questionnaire = Model.Item1;
+    var answerJson = Model.Item2 ?? string.Empty;
+    JsonDocument? doc = null;
+    try { doc = string.IsNullOrWhiteSpace(answerJson) ? null : JsonDocument.Parse(answerJson); } catch { doc = null; }
+}
+
+<style>
+    .questionnaire-a4 {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #fff;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card {
+        border: none;
+        box-shadow: none;
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card-body {
+        padding: 18mm 16mm;
+    }
+
+    @@media (max-width: 900px) {
+        .questionnaire-a4 {
+            width: 100%;
+            min-height: auto;
+        }
+
+        .questionnaire-a4 .card-body {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">收集的问卷</h4>
+            <div class="text-muted small mt-1">
+                <span class="me-3">患者：@ViewBag.PatientName</span>
+                <span class="me-3">生成：@(((DateTime)ViewBag.CreatedAt).ToString("yyyy-MM-dd HH:mm"))</span>
+                @if (ViewBag.SubmittedAt != null)
+                {
+                    <span>提交：@(((DateTime?)ViewBag.SubmittedAt)!.Value.ToString("yyyy-MM-dd HH:mm"))</span>
+                }
+            </div>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-secondary" href="@Url.Action("Index", "Consultation")">返回健康问卷</a>
+        </div>
+    </div>
+
+    <div class="questionnaire-a4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-3">@((questionnaire?.Title ?? "健康问卷"))</h4>
+                @if (!string.IsNullOrWhiteSpace(questionnaire?.Introduction))
+                {
+                    <div class="text-muted mb-3">@questionnaire!.Introduction</div>
+                }
+
+                @if (doc == null)
+                {
+                    <div class="alert alert-warning mb-0">该问卷尚未提交或答案读取失败。</div>
+                }
+                else
+                {
+                    var questions = doc.RootElement.TryGetProperty("questions", out var qs) && qs.ValueKind == JsonValueKind.Array
+                        ? qs.EnumerateArray().ToList()
+                        : new List<JsonElement>();
+
+                    if (questions.Count == 0)
+                    {
+                        <div class="alert alert-warning mb-0">未读取到提交内容。</div>
+                    }
+                    else
+                    {
+                        <div class="d-grid gap-3">
+                            @for (var i = 0; i < questions.Count; i++)
+                            {
+                                var q = questions[i];
+                                var idx = q.TryGetProperty("index", out var ie) ? ie.GetInt32() : (i + 1);
+                                var text = q.TryGetProperty("question", out var qe) ? (qe.GetString() ?? "") : "";
+                                var ans = q.TryGetProperty("answer", out var ae) ? (ae.GetString() ?? "") : "";
+                                var rating = q.TryGetProperty("rating", out var re) ? re.GetInt32() : 0;
+
+                                <div class="border rounded p-3">
+                                    <div class="fw-semibold mb-2">@idx. @text</div>
+                                    <div class="mb-2"><span class="text-muted">评分：</span><span class="fw-semibold">@(rating == 0 ? "未选择" : rating + " 级")</span></div>
+                                    <div class="text-muted small mb-1">文字回答：</div>
+                                    <div>@(string.IsNullOrWhiteSpace(ans) ? "未填写" : ans)</div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,63 @@
+@model DiabetesPatientApp.ViewModels.DoctorNotificationPageViewModel
+
+@{
+    ViewData["Title"] = "消息通知";
+}
+
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">消息通知</h4>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>通知列表</span>
+        </div>
+        @if (Model.Notifications.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.Notifications)
+                {
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <div class="fw-semibold">
+                                    @item.PatientName
+                                    @if (string.Equals(item.NotificationType, "Consultation", StringComparison.OrdinalIgnoreCase) && item.ShowUnreadCount && item.UnreadCount > 0)
+                                    {
+                                        <span class="badge bg-danger ms-2">@item.UnreadCount</span>
+                                    }
+                                    else if (string.Equals(item.NotificationType, "FollowUp", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <span class="badge bg-warning text-dark ms-2">回访提醒</span>
+                                    }
+                                </div>
+                                @if (item.NextFollowUpDate.HasValue)
+                                {
+                                    <small class="text-muted d-block mt-1">下次回访时间：@item.NextFollowUpDate.Value.ToString("yyyy-MM-dd")</small>
+                                }
+                            </div>
+                            <div class="text-end">
+                                <small class="d-block text-muted">@item.NotificationTime.ToString("yyyy-MM-dd HH:mm")</small>
+                                @if (string.Equals(item.NotificationType, "Consultation", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <a class="btn btn-sm btn-primary text-white mt-1" href="@Url.Action("Chat", "Consultation", new { doctorId = item.PatientId })">回复</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-primary text-white mt-1" href="@Url.Action("FollowUps", "Doctor")">回访登记</a>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="card-body text-muted">暂无消息通知。</div>
+        }
+    </div>
+</div>

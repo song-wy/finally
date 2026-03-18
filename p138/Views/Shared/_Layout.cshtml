@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+@inject DiabetesPatientApp.Services.IReminderService ReminderService
+@inject DiabetesPatientApp.Services.IWoundService WoundService
+@inject DiabetesPatientApp.Services.IFootPressureService FootPressureService
+@inject DiabetesPatientApp.Services.ISystemSettingsService SystemSettings
+@{
+    var systemName = await SystemSettings.GetStringAsync(DiabetesPatientApp.Services.SystemSettingKeys.SystemName, "糖尿病足管理系统");
+    var maintenanceAnnouncement = await SystemSettings.GetStringAsync(DiabetesPatientApp.Services.SystemSettingKeys.MaintenanceAnnouncement, "");
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @systemName</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-dark: #0b3a66; /* 藏蓝 */
+            --brand-dark-2: #072a4b;
+            --bg-soft: #f6f8fb;
+        }
+        html, body { height: 100%; overflow: hidden; }
+        body { background-color: var(--bg-soft); }
+        .app-shell { display: grid; grid-template-columns: 240px 1fr; height: 100vh; overflow: hidden; }
+        .sidebar { background: linear-gradient(180deg, var(--brand-dark), var(--brand-dark-2)); color: #e7f3ec; }
+        .sidebar .brand { font-weight: 700; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,.12); }
+        .sidebar a { color: #e7f3ec; text-decoration: none; display: block; padding: 12px 20px; border-left: 3px solid transparent; transition: background .2s ease, border-left-color .2s ease; }
+        .sidebar a:hover,
+        .sidebar a.active { background: rgba(255,255,255,.06); border-left-color: #a6e0c4; }
+        .sidebar-link-with-dot { position: relative; }
+        .sidebar-link-with-dot .sidebar-link-text { display: inline-block; padding-right: 18px; }
+        .sidebar-reminder-dot {
+            position: absolute;
+            top: 7px;
+            right: 136px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #ff2d2d;
+        }
+        .sidebar-group-title { padding: 18px 20px 8px; font-size: .95rem; letter-spacing: 1px; text-transform: uppercase; opacity: .7; }
+        .topbar { background: var(--brand-dark); color: #fff; padding: 10px 16px; display: flex; justify-content: flex-end; align-items: center; }
+        .content-shell { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .main-container { padding: 20px; flex: 1 1 auto; overflow-y: auto; }
+        .btn, .card, .form-control, .alert { border-radius: 10px; }
+        .main-container .btn:not(.btn-lg) { padding: 0.25rem 0.5rem; font-size: 0.875rem; min-width: 90px; }
+        .btn, .btn-primary, .btn-success, .btn-info, .btn-warning, .btn-danger { background: var(--brand-dark); border-color: var(--brand-dark); }
+        .btn:hover, .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-warning:hover, .btn-danger:hover { background: var(--brand-dark-2); border-color: var(--brand-dark-2); }
+        .sidebar, .topbar { font-size: 1.05rem; }
+        main { font-size: .96rem; }
+    </style>
+</head>
+<body>
+    @{
+        var currentUserId = Context.Session.GetInt32("UserId");
+        var selectedRole = Context.Session.GetString("SelectedRole") ?? string.Empty;
+        var userType = Context.Session.GetString("UserType") ?? string.Empty;
+        var isAdminPortal =
+            string.Equals(selectedRole, "admin", System.StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(userType, "Admin", System.StringComparison.OrdinalIgnoreCase);
+        var isDoctorPortal =
+            string.Equals(selectedRole, "doctor", System.StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(userType, "Doctor", System.StringComparison.OrdinalIgnoreCase);
+        var hasReminderDot = false;
+
+        if (!isAdminPortal && !isDoctorPortal && currentUserId.HasValue && currentUserId.Value > 0)
+        {
+            var bloodSugarCompletion = await ReminderService.GetTodayBloodSugarCompletionAsync(currentUserId.Value);
+            var hasBloodSugarReminder = bloodSugarCompletion.Any(s =>
+                string.Equals(s.StatusCode, "Pending", System.StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(s.StatusCode, "Incomplete", System.StringComparison.OrdinalIgnoreCase));
+
+            var utcNow = DateTime.UtcNow;
+            TimeZoneInfo beijingTimeZone;
+            try
+            {
+                beijingTimeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                beijingTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Shanghai");
+            }
+
+            var beijingNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, beijingTimeZone);
+            var today = beijingNow.Date;
+            var daysSinceMonday = ((int)today.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+            var thisWeekMonday = today.AddDays(-daysSinceMonday);
+            var nextMonday = thisWeekMonday.AddDays(7);
+            var woundReminderStartTime = thisWeekMonday.AddHours(12);
+            var woundRecords = await WoundService.GetRecordsByDateRangeAsync(currentUserId.Value, thisWeekMonday, nextMonday.AddDays(-1));
+            var hasWoundReminder = beijingNow >= woundReminderStartTime && !(woundRecords?.Any() ?? false);
+
+            var footPressureRecords = await FootPressureService.GetRecordsByDateRangeAsync(currentUserId.Value, thisWeekMonday, thisWeekMonday);
+            var firstFootPressureCompleted = footPressureRecords.Any(r => r.RecordDate.Date == thisWeekMonday && r.RecordTime >= TimeSpan.FromHours(12) && r.RecordTime < TimeSpan.FromHours(19));
+            var secondFootPressureCompleted = footPressureRecords.Any(r => r.RecordDate.Date == thisWeekMonday && r.RecordTime >= TimeSpan.FromHours(19));
+            var hasFootPressureReminder =
+                (beijingNow >= thisWeekMonday.AddHours(12) && beijingNow < thisWeekMonday.AddHours(19) && !firstFootPressureCompleted) ||
+                (beijingNow >= thisWeekMonday.AddHours(19) && (!firstFootPressureCompleted || !secondFootPressureCompleted)) ||
+                (beijingNow >= nextMonday && (!firstFootPressureCompleted || !secondFootPressureCompleted));
+
+            hasReminderDot = hasBloodSugarReminder || hasWoundReminder || hasFootPressureReminder;
+        }
+    }
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">@systemName</div>
+            @if (currentUserId.HasValue && currentUserId.Value > 0)
+            {
+                if (isAdminPortal)
+                {
+                    @await Html.PartialAsync("~/Views/Shared/_AdminSidebar.cshtml")
+                }
+                else if (isDoctorPortal)
+                {
+                    @await Html.PartialAsync("~/Views/Shared/_DoctorSidebar.cshtml")
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Home")">首页</a>
+                    <a href="@Url.Action("Index", "Dashboard")">仪表板</a>
+                    <a href="@Url.Action("Index", "BloodSugar")">血糖记录</a>
+                    <a href="@Url.Action("Index", "Wound")">伤口监护</a>
+                    <a href="@Url.Action("Index", "FootPressure")">足部压力</a>
+                    <a href="@Url.Action("Index", "Alert")">预警触发</a>
+                    <a href="@Url.Action("Index", "Tasks")">每日任务</a>
+                    <a href="@Url.Action("Index", "Education")">健康宣教</a>
+                    <a href="@Url.Action("Index", "Reminder")" class="sidebar-link-with-dot">
+                        <span class="sidebar-link-text">提醒设置</span>
+                        @if (hasReminderDot)
+                        {
+                            <span class="sidebar-reminder-dot" title="有待处理提醒"></span>
+                        }
+                    </a>
+                    <a href="@Url.Action("Doctors", "Consultation")">在线咨询</a>
+                    <a href="@Url.Action("Profile", "Dashboard")">信息完善</a>
+                    <a href="@Url.Action("Index", "MedicalExperience")">就医体验</a>
+                }
+            }
+        </aside>
+        <section class="content-shell">
+            <div class="topbar">
+                @if (currentUserId.HasValue && currentUserId.Value > 0)
+                {
+                    <span class="me-3">欢迎，@Context.Session.GetString("FullName")</span>
+                    <a class="btn btn-sm btn-light" href="@Url.Action("Logout", "Auth")">退出</a>
+                }
+            </div>
+            <div class="main-container">
+                @if (!string.IsNullOrWhiteSpace(maintenanceAnnouncement))
+                {
+                    <div class="alert alert-warning border mb-3">
+                        <strong>维护公告：</strong>@maintenanceAnnouncement
+                    </div>
+                }
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

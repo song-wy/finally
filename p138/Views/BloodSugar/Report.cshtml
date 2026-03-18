@@ -1,0 +1,185 @@
+@model DiabetesPatientApp.ViewModels.BloodSugarReportViewModel
+@{
+    ViewData["Title"] = "血糖分析报告";
+}
+
+<style>
+    .report-a4 {
+        max-width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 20mm 25mm;
+        background: #fff;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        border: 1px solid #dee2e6;
+    }
+    .report-a4 .report-title {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+    .report-a4 .report-meta {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+    .report-a4 .report-section {
+        margin-bottom: 18px;
+    }
+    .report-a4 .report-section-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .report-a4 .report-section-body {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-align: justify;
+    }
+    .report-a4 table.info-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+    .report-a4 table.info-table td {
+        padding: 6px 10px;
+        border: 1px solid #dee2e6;
+    }
+    .report-a4 table.info-table td:first-child {
+        width: 100px;
+        background: #f8f9fa;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <a href="@Url.Action("Trend", "BloodSugar", new { days = Model.Days })" class="btn btn-primary btn-sm text-white">返回趋势图</a>
+            <a href="@Url.Action("Index", "BloodSugar")" class="btn btn-primary btn-sm text-white">返回列表</a>
+        </div>
+    </div>
+
+    <div class="report-a4">
+        <div class="report-title">血糖分析报告</div>
+        <div class="report-meta">报告生成时间：@Model.ReportDate.ToString("yyyy-MM-dd HH:mm")</div>
+
+        <div class="report-section">
+            <div class="report-section-title">一、患者基本信息</div>
+            <table class="info-table">
+                <tr>
+                    <td>姓名</td>
+                    <td>@(Model.PatientName ?? "—")</td>
+                    <td style="width:90px; background:#f8f9fa; font-weight:500;">年龄</td>
+                    <td>@(Model.Age?.ToString() ?? "—")</td>
+                </tr>
+                <tr>
+                    <td>性别</td>
+                    <td>@(Model.Gender ?? "—")</td>
+                    <td style="width:90px; background:#f8f9fa; font-weight:500;">电话</td>
+                    <td>@(Model.PhoneNumber ?? "—")</td>
+                </tr>
+                @if (!string.IsNullOrWhiteSpace(Model.Email))
+                {
+                    <tr>
+                        <td>邮箱</td>
+                        <td colspan="3">@Model.Email</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="report-section">
+            <div class="report-section-title">二、血糖监测概况</div>
+            <table class="info-table">
+                <tr>
+                    <td>监测时段</td>
+                    <td>@Model.MonitoringPeriodText</td>
+                    <td style="width:90px; background:#f8f9fa; font-weight:500;">总次数</td>
+                    <td>@Model.TotalCount 次</td>
+                </tr>
+                <tr>
+                    <td>频率</td>
+                    <td colspan="3">@Model.FrequencyText</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <div class="report-section-title">三、血糖控制达标率</div>
+            @if (!string.IsNullOrWhiteSpace(Model.TrendAnalysis))
+            {
+                <div class="report-section-body mb-2">@Model.TrendAnalysis</div>
+            }
+            <table class="info-table">
+                <tr>
+                    <td>空腹血糖达标率</td>
+                    <td colspan="3">@Model.FastingComplianceText</td>
+                </tr>
+                <tr>
+                    <td>餐后血糖达标率</td>
+                    <td colspan="3">@Model.AfterMealComplianceText</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <div class="report-section-title">四、相关风险</div>
+            <table class="info-table">
+                <tr>
+                    <td>高血糖感染风险</td>
+                    <td colspan="3">@Model.HyperglycemiaRiskText</td>
+                </tr>
+                <tr>
+                    <td>低血糖跌倒风险</td>
+                    <td colspan="3">@Model.HypoglycemiaRiskText</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <div class="report-section-title">五、建议</div>
+            <table class="info-table">
+                <tr>
+                    <td>饮食建议</td>
+                    <td colspan="3">@Model.DietSuggestion</td>
+                </tr>
+                <tr>
+                    <td>药物建议</td>
+                    <td colspan="3">@Model.MedicationSuggestion</td>
+                </tr>
+                <tr>
+                    <td>运动建议</td>
+                    <td colspan="3">@Model.ExerciseSuggestion</td>
+                </tr>
+                <tr>
+                    <td>监测次数建议</td>
+                    <td colspan="3">@Model.MonitoringSuggestion</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+        <div class="col-12 text-center">
+            <a href="@Url.Action("SaveReportToFolder", "BloodSugar", new { days = Model.Days })" class="btn btn-success btn-sm text-white me-2">保存至文件夹</a>
+            <a href="@Url.Action("Doctors", "Consultation")" class="btn btn-primary btn-sm text-white">问医生</a>
+        </div>
+    </div>
+
+    @if (TempData["ReportSaveSuccess"] as bool? == true && TempData["ReportSavePath"] != null)
+    {
+        <div class="alert alert-success">
+            报告已保存至：<strong>@TempData["ReportSavePath"]</strong>
+        </div>
+    }
+    @if (TempData["ReportSaveError"] != null)
+    {
+        <div class="alert alert-danger">
+            保存失败：@TempData["ReportSaveError"]
+        </div>
+    }
+</div>

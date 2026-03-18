@@ -1,0 +1,140 @@
+@model DiabetesPatientApp.ViewModels.AiQuestionnaireViewModel
+
+@{
+    ViewData["Title"] = "填写健康问卷";
+    var submittedAt = ViewBag.SubmittedAt as DateTime?;
+}
+
+<style>
+    .questionnaire-a4 {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #fff;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card {
+        border: none;
+        box-shadow: none;
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card-body {
+        padding: 18mm 16mm;
+    }
+
+    @@media (max-width: 900px) {
+        .questionnaire-a4 {
+            width: 100%;
+            min-height: auto;
+        }
+
+        .questionnaire-a4 .card-body {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <div class="questionnaire-a4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>填写健康问卷</span>
+                @if (submittedAt.HasValue)
+                {
+                    <small class="text-success">已提交：@submittedAt.Value.ToString("yyyy-MM-dd HH:mm")</small>
+                }
+            </div>
+            <div class="card-body">
+                <h4 class="mb-3">@Model.Title</h4>
+                @if (!string.IsNullOrWhiteSpace(Model.Introduction))
+                {
+                    <div class="text-muted mb-3">@Model.Introduction</div>
+                }
+
+                @{
+                    var isKnowledgeScale = (Model.Title ?? string.Empty).Contains("了解程度量表", StringComparison.OrdinalIgnoreCase);
+                    var scaleLabels = new[] { "完全不了解", "一点点了解", "一般", "较了解", "非常了解" };
+                }
+
+                <form action="@Url.Action("SubmitQuestionnaire", "Consultation")" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@ViewBag.AssignmentId" />
+                    <input type="hidden" name="token" value="@ViewBag.Token" />
+
+                    <div class="d-grid gap-3">
+                        @for (var i = 0; i < Model.Questions.Count; i++)
+                        {
+                            var question = Model.Questions[i];
+                            <div class="border rounded p-3">
+                                <div class="fw-semibold mb-3">@(i + 1). @question</div>
+
+                                <div>
+                                    <div class="form-label mb-2">@(isKnowledgeScale ? "了解程度" : "1-5级评分")</div>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @for (var level = 1; level <= 5; level++)
+                                        {
+                                            var optionId = $"question_{i}_level_{level}";
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="rating_@i" id="@optionId" value="@level" @(submittedAt.HasValue ? "disabled" : null) />
+                                                <label class="form-check-label" for="@optionId">
+                                                    @(isKnowledgeScale ? scaleLabels[level - 1] : $"{level} 级")
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                    <input type="hidden" name="ratings" value="0" />
+                                    @if (!isKnowledgeScale)
+                                    {
+                                        <div class="small text-muted mt-2">分值越高，代表问题越明显、风险越高或越需要重点处理。</div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (!submittedAt.HasValue)
+                    {
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary text-white">提交问卷</button>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // 将每题评分 radio 的值写入同索引的隐藏 ratings 输入，便于后端按顺序接收
+            var blocks = document.querySelectorAll('[name^="rating_"]');
+            // 监听全局 change
+            document.addEventListener('change', function (e) {
+                var target = e.target;
+                if (!target || target.type !== 'radio' || !target.name || !target.name.startsWith('rating_')) return;
+                var idx = parseInt(target.name.replace('rating_', ''), 10);
+                if (isNaN(idx)) return;
+
+                // 找到第 idx 个隐藏 ratings
+                var hiddenRatings = document.querySelectorAll('input[name="ratings"]');
+                if (hiddenRatings && hiddenRatings.length > idx) {
+                    hiddenRatings[idx].value = target.value;
+                }
+            });
+        })();
+    </script>
+}
+

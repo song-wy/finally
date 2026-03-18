@@ -1,0 +1,124 @@
+@model List<DiabetesPatientApp.Models.FootPressureRecord>
+
+@{
+    ViewData["Title"] = "足部压力记录";
+}
+
+<style>
+    .badge.bg-orange { background-color: #fd7e14; color: #fff; }
+    .btn, .btn:hover, .btn:focus, .btn:active {
+        color: #fff !important;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>足部压力记录</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Create")" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> 新增记录
+            </a>
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary">返回</a>
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">
+            暂无足部压力记录，<a href="@Url.Action("Create")">立即添加</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>左脚压力</th>
+                        <th>左脚状态</th>
+                        <th>右脚压力</th>
+                        <th>右脚状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in Model)
+                    {
+                        <tr>
+                            <td>@record.RecordDate.ToString("yyyy-MM-dd")</td>
+                            <td>@record.RecordTime.ToString(@"hh\:mm")</td>
+                            <td>
+                                @if (record.LeftFootPressure.HasValue)
+                                {
+                                    <span>@record.LeftFootPressure.Value.ToString("F2") kPa</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">未测量</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(record.LeftFootStatus))
+                                {
+                                    var leftClass = "bg-secondary";
+                                    if (record.LeftFootStatus == "低风险") leftClass = "bg-success";
+                                    else if (record.LeftFootStatus == "中风险") leftClass = "bg-warning";
+                                    else if (record.LeftFootStatus == "高风险") leftClass = "bg-orange";
+                                    else if (record.LeftFootStatus == "极高风险") leftClass = "bg-danger";
+                                    <span class="badge @leftClass">@record.LeftFootStatus</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>
+                                @if (record.RightFootPressure.HasValue)
+                                {
+                                    <span>@record.RightFootPressure.Value.ToString("F2") kPa</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">未测量</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(record.RightFootStatus))
+                                {
+                                    var rightClass = "bg-secondary";
+                                    if (record.RightFootStatus == "低风险") rightClass = "bg-success";
+                                    else if (record.RightFootStatus == "中风险") rightClass = "bg-warning";
+                                    else if (record.RightFootStatus == "高风险") rightClass = "bg-orange";
+                                    else if (record.RightFootStatus == "极高风险") rightClass = "bg-danger";
+                                    <span class="badge @rightClass">@record.RightFootStatus</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = record.FootPressureId })" class="btn btn-sm btn-info">
+                                    查看
+                                </a>
+                                <a href="@Url.Action("Edit", new { id = record.FootPressureId })" class="btn btn-sm btn-warning">
+                                    编辑
+                                </a>
+                                <form method="post" action="@Url.Action("Delete", new { id = record.FootPressureId })" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('确定删除？')">
+                                        删除
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

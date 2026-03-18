@@ -1,0 +1,43 @@
+@model DiabetesPatientApp.Models.WoundRecord
+
+@{
+    ViewData["Title"] = "伤口详情";
+}
+
+<style>
+    .wound-page .btn { color: #fff !important; min-width: 90px; }
+</style>
+
+<div class="container mt-4 wound-page">
+    <div class="row mb-3">
+        <div class="col text-end">
+            <a href="@Url.Action("Index")" class="btn btn-secondary">返回列表</a>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>伤口监护详情</h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.PhotoPath))
+                    {
+                        <div class="mb-3">
+                            <p><strong>伤口照片：</strong></p>
+                            <img src="@Model.PhotoPath" class="img-fluid" style="max-height: 400px;">
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <p><strong>记录时间：</strong> @Model.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("Edit", new { id = Model.WoundId })" class="btn btn-warning">编辑</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

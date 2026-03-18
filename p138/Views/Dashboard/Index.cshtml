@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "仪表板";
+}
+
+<style>
+    .dashboard-card {
+        min-height: 180px;
+    }
+
+    .dashboard-card .card-body {
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .dashboard-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-card-value {
+        font-size: 3rem;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-card-subtext {
+        color: #6c757d;
+        margin-bottom: 0.75rem;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title dashboard-card-title">今日数据统计</h5>
+                        <p class="card-text dashboard-card-value">@ViewBag.TodayRecordsCount</p>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Details", "Dashboard", new { period = "today" })" class="btn btn-primary btn-sm">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title dashboard-card-title">本周数据统计</h5>
+                        <p class="card-text dashboard-card-value">@ViewBag.RecentWoundsCount</p>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Details", "Dashboard", new { period = "week" })" class="btn btn-primary btn-sm">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title dashboard-card-title">本月数据统计</h5>
+                        <p class="card-text dashboard-card-value">@ViewBag.UnreadMessagesCount</p>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Details", "Dashboard", new { period = "month" })" class="btn btn-primary btn-sm">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

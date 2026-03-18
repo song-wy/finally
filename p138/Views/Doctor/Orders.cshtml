@@ -1,0 +1,344 @@
+@model DiabetesPatientApp.ViewModels.DoctorOrdersPageViewModel
+@{
+    ViewData["Title"] = "医嘱与任务";
+    var patients = (Model.Patients ?? Enumerable.Empty<DiabetesPatientApp.ViewModels.DoctorPatientSummary>()).ToList();
+    var orders = (Model.Orders ?? Enumerable.Empty<DiabetesPatientApp.ViewModels.DoctorOrderItem>()).ToList();
+    var categories = new[] { "用药", "运动", "饮食", "其他" };
+    var labelsJson = System.Text.Json.JsonSerializer.Serialize(Model.AnalyticsLabels ?? new List<string>());
+    var totalJson = System.Text.Json.JsonSerializer.Serialize(Model.AnalyticsTotalTasks ?? new List<int>());
+    var doneJson = System.Text.Json.JsonSerializer.Serialize(Model.AnalyticsCompletedTasks ?? new List<int>());
+}
+
+<div class="container-fluid mt-3">
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <div class="alert alert-info">@Model.StatusMessage</div>
+    }
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">医嘱与任务</h4>
+            <div class="text-muted small">医生下达医嘱后，患者端会按天生成打卡任务。</div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header fw-semibold">下达医嘱</div>
+        <div class="card-body">
+            <form method="post" action="@Url.Action("CreateOrder", "Doctor")">
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-12 col-md-3">
+                        <label class="form-label small text-muted">选择患者</label>
+                        <select class="form-select" name="patientId" required>
+                            @foreach (var p in patients)
+                            {
+                                <option value="@p.UserId" selected="@(p.UserId == Model.SelectedPatientId ? "selected" : null)">@p.DisplayName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-label small text-muted">类型</label>
+                        <select class="form-select" name="category">
+                            @foreach (var c in categories)
+                            {
+                                <option value="@c">@c</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="form-label small text-muted">开始日期</label>
+                        <input class="form-control" type="date" name="startDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label small text-muted">结束日期（可选）</label>
+                        <input class="form-control" type="date" name="endDate" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small text-muted">医嘱内容</label>
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            <button class="btn btn-sm btn-outline-primary quick-template" type="button" data-category="用药" data-content="二甲双胍 0.5g 每日2次，餐后服用。">用药模板</button>
+                            <button class="btn btn-sm btn-outline-primary quick-template" type="button" data-category="运动" data-content="餐后30分钟快走20分钟，每周至少5天。">运动模板</button>
+                            <button class="btn btn-sm btn-outline-primary quick-template" type="button" data-category="饮食" data-content="控制精制糖与油炸食物摄入；三餐定时定量，增加蔬菜与优质蛋白。">饮食模板</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="appendTemplateBtn" type="button">追加模式：开</button>
+                        </div>
+                        <textarea class="form-control" id="orderContent" name="content" rows="3" maxlength="500" placeholder="例如：二甲双胍 0.5g 每日2次；餐后30分钟快走20分钟；控制精制糖摄入..." required></textarea>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary text-white">下达医嘱</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+            <span>今日任务完成情况（@Model.Today.ToString("yyyy-MM-dd")）</span>
+            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Orders", "Doctor", new { patientId = Model.SelectedPatientId })">刷新</a>
+        </div>
+        <div class="card-body">
+            @if (Model.TodayTasks == null || !Model.TodayTasks.Any())
+            {
+                <div class="text-muted">暂无今日任务（可能尚未下达有效医嘱）。</div>
+            }
+            else
+            {
+                var done = Model.TodayTasks.Count(x => x.IsCompleted);
+                var total = Model.TodayTasks.Count();
+                <div class="mb-2">
+                    <span class="badge @(done == total ? "bg-success" : "bg-warning text-dark")">已完成 @done / @total</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 90px;">类型</th>
+                                <th>任务内容</th>
+                                <th style="width: 110px;">状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var t in Model.TodayTasks)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@t.Category</span></td>
+                                    <td>@t.Content</td>
+                                    <td>
+                                        @if (t.IsCompleted)
+                                        {
+                                            <span class="text-success">已打卡 @(t.CompletedAt.HasValue ? t.CompletedAt.Value.ToString("HH:mm") : "")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">未完成</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header fw-semibold d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span>近 @Model.AnalyticsDays 天打卡趋势（患者维度）</span>
+            <div class="d-flex gap-2 flex-wrap">
+                <a class="btn btn-sm @(Model.AnalyticsDays == 7 ? "btn-primary text-white" : "btn-outline-primary")"
+                   href="@Url.Action("Orders", "Doctor", new { patientId = Model.SelectedPatientId, days = 7 })">近7天</a>
+                <a class="btn btn-sm @(Model.AnalyticsDays == 30 ? "btn-primary text-white" : "btn-outline-primary")"
+                   href="@Url.Action("Orders", "Doctor", new { patientId = Model.SelectedPatientId, days = 30 })">近30天</a>
+                <a class="btn btn-sm btn-outline-success"
+                   href="@Url.Action("OrdersTasksExport", "Doctor", new { patientId = Model.SelectedPatientId, days = Model.AnalyticsDays })">导出CSV</a>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.SelectedPatientId <= 0)
+            {
+                <div class="text-muted">请选择患者后查看统计。</div>
+            }
+            else if (Model.AnalyticsTotalTasks == null || Model.AnalyticsTotalTasks.Sum() == 0)
+            {
+                <div class="text-muted">近 @Model.AnalyticsDays 天暂无打卡任务（可能尚未下达有效医嘱）。</div>
+            }
+            else
+            {
+                var sumTotal = (Model.AnalyticsTotalTasks ?? new List<int>()).Sum();
+                var sumDone = (Model.AnalyticsCompletedTasks ?? new List<int>()).Sum();
+                var rate = sumTotal == 0 ? 0 : (int)Math.Round(sumDone * 100.0 / sumTotal);
+                <div class="row g-3">
+                    <div class="col-12 col-lg-8">
+                        <canvas id="tasksTrendChart" height="110"></canvas>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="border rounded p-3 mb-3">
+                            <div class="text-muted small">总体完成率</div>
+                            <div class="d-flex align-items-baseline gap-2">
+                                <div class="fs-3 fw-bold">@rate%</div>
+                                <div class="text-muted">（@sumDone / @sumTotal）</div>
+                            </div>
+                        </div>
+                        <div class="border rounded p-3">
+                            <div class="text-muted small mb-2">按类型统计</div>
+                            @if (Model.AnalyticsByCategory == null || Model.AnalyticsByCategory.Count == 0)
+                            {
+                                <div class="text-muted">暂无数据</div>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 90px;">类型</th>
+                                                <th style="width: 110px;">完成</th>
+                                                <th style="width: 90px;">完成率</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var c in Model.AnalyticsByCategory)
+                                            {
+                                                var r = c.Total == 0 ? 0 : (int)Math.Round(c.Completed * 100.0 / c.Total);
+                                                <tr>
+                                                    <td><span class="badge bg-secondary">@c.Category</span></td>
+                                                    <td>@c.Completed / @c.Total</td>
+                                                    <td>@r%</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+            <span>最近医嘱</span>
+            <form method="get" action="@Url.Action("Orders", "Doctor")" class="d-flex gap-2">
+                <select class="form-select form-select-sm" name="patientId" onchange="this.form.submit()">
+                    @foreach (var p in patients)
+                    {
+                        <option value="@p.UserId" selected="@(p.UserId == Model.SelectedPatientId ? "selected" : null)">@p.DisplayName</option>
+                    }
+                </select>
+            </form>
+        </div>
+        <div class="card-body">
+            @if (orders.Count == 0)
+            {
+                <div class="text-muted">暂无医嘱。</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>患者</th>
+                                <th style="width: 90px;">类型</th>
+                                <th>内容</th>
+                                <th style="width: 120px;">起止</th>
+                                <th style="width: 120px;">下达时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var o in orders)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@o.PatientName</td>
+                                    <td><span class="badge bg-secondary">@o.Category</span></td>
+                                    <td>@o.Content</td>
+                                    <td class="text-muted small">
+                                        @o.StartDate.ToString("yyyy-MM-dd")
+                                        @(o.EndDate.HasValue ? $"~{o.EndDate.Value:yyyy-MM-dd}" : "")
+                                    </td>
+                                    <td class="text-muted small">@o.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            const content = document.getElementById('orderContent');
+            const appendBtn = document.getElementById('appendTemplateBtn');
+            if (!content) return;
+
+            let appendMode = true;
+            function updateAppendBtn() {
+                if (!appendBtn) return;
+                appendBtn.textContent = `追加模式：${appendMode ? '开' : '关'}`;
+            }
+            if (appendBtn) {
+                appendBtn.addEventListener('click', function () {
+                    appendMode = !appendMode;
+                    updateAppendBtn();
+                });
+                updateAppendBtn();
+            }
+
+            document.addEventListener('click', function (e) {
+                const btn = e.target && e.target.closest ? e.target.closest('.quick-template') : null;
+                if (!btn) return;
+                const cat = btn.getAttribute('data-category') || '';
+                const txt = btn.getAttribute('data-content') || '';
+                const catSelect = document.querySelector('select[name="category"]');
+                if (catSelect && cat) catSelect.value = cat;
+                if (!txt) return;
+
+                if (appendMode && content.value && !content.value.trim().endsWith('；')) {
+                    content.value = content.value.trim() + '；' + txt;
+                } else if (appendMode && content.value) {
+                    content.value = content.value + txt;
+                } else {
+                    content.value = txt;
+                }
+                content.focus();
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const el = document.getElementById('tasksTrendChart');
+            if (!el || !window.Chart) return;
+
+            const labels = @Html.Raw(labelsJson);
+            const total = @Html.Raw(totalJson);
+            const done = @Html.Raw(doneJson);
+
+            const ctx = el.getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: '已完成',
+                            data: done,
+                            borderColor: 'rgba(25,135,84,1)',
+                            backgroundColor: 'rgba(25,135,84,0.15)',
+                            tension: 0.25,
+                            fill: true
+                        },
+                        {
+                            label: '总任务',
+                            data: total,
+                            borderColor: 'rgba(13,110,253,1)',
+                            backgroundColor: 'rgba(13,110,253,0.10)',
+                            tension: 0.25,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+}
+

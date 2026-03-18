@@ -1,0 +1,131 @@
+@model DiabetesPatientApp.ViewModels.PatientProfileViewModel
+
+@{
+    ViewData["Title"] = "信息完善";
+}
+
+<div class="container-fluid mt-3">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-8">
+            <div class="card">
+                <div class="card-header">信息完善</div>
+                <div class="card-body">
+                    <form action="@Url.Action("Profile", "Dashboard")" method="post">
+                        @Html.AntiForgeryToken()
+
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            var modelErrors = ViewData.ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage)
+                                .Where(e => !string.IsNullOrWhiteSpace(e))
+                                .Distinct()
+                                .ToList();
+                            if (modelErrors.Any())
+                            {
+                                <div class="alert alert-danger">
+                                    @foreach (var error in modelErrors)
+                                    {
+                                        <div>@error</div>
+                                    }
+                                </div>
+                            }
+                        }
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">用户名</label>
+                                <input class="form-control" value="@Model.Username" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">姓名</label>
+                                <input class="form-control" name="FullName" value="@Model.FullName" placeholder="请输入姓名" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">邮箱</label>
+                                <input class="form-control" name="Email" type="email" value="@Model.Email" placeholder="请输入邮箱" />
+                                @if (ViewData.ModelState[nameof(Model.Email)]?.Errors.Count > 0)
+                                {
+                                    <div class="text-danger small mt-1">@ViewData.ModelState[nameof(Model.Email)]!.Errors[0].ErrorMessage</div>
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">性别</label>
+                                <select class="form-select" name="Gender">
+                                    <option value="">请选择</option>
+                                    <option value="男" @(Model.Gender == "男" ? "selected" : null)>男</option>
+                                    <option value="女" @(Model.Gender == "女" ? "selected" : null)>女</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">年龄</label>
+                                <input class="form-control" name="Age" type="number" min="0" max="150" value="@(Model.Age?.ToString() ?? string.Empty)" placeholder="请输入年龄" />
+                                @if (ViewData.ModelState[nameof(Model.Age)]?.Errors.Count > 0)
+                                {
+                                    <div class="text-danger small mt-1">@ViewData.ModelState[nameof(Model.Age)]!.Errors[0].ErrorMessage</div>
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">联系方式</label>
+                                <input class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="请输入联系电话" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">居住情况</label>
+                                <select class="form-select" name="ResidenceStatus">
+                                    <option value="">请选择</option>
+                                    <option value="独居" @(Model.ResidenceStatus == "独居" ? "selected" : null)>独居</option>
+                                    <option value="与家人同住" @(Model.ResidenceStatus == "与家人同住" ? "selected" : null)>与家人同住</option>
+                                    <option value="养老机构" @(Model.ResidenceStatus == "养老机构" ? "selected" : null)>养老机构</option>
+                                    <option value="其他" @(Model.ResidenceStatus == "其他" ? "selected" : null)>其他</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">糖尿病足类型</label>
+                                <select class="form-select" name="DiabeticFootType">
+                                    <option value="">请选择</option>
+                                    <option value="神经性" @(Model.DiabeticFootType == "神经性" ? "selected" : null)>神经性</option>
+                                    <option value="缺血性" @(Model.DiabeticFootType == "缺血性" ? "selected" : null)>缺血性</option>
+                                    <option value="混合性" @(Model.DiabeticFootType == "混合性" ? "selected" : null)>混合性</option>
+                                    <option value="未明确" @(Model.DiabeticFootType == "未明确" ? "selected" : null)>未明确</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">病程</label>
+                                <input class="form-control" name="DiseaseCourse" value="@Model.DiseaseCourse" placeholder="例如：3年" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">确诊日期</label>
+                                <input class="form-control" name="DiagnosisDate" type="date" value="@(Model.DiagnosisDate?.ToString("yyyy-MM-dd") ?? string.Empty)" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">就诊前是否已有溃疡</label>
+                                <select class="form-select" name="HadUlcerBeforeVisit">
+                                    <option value="">请选择</option>
+                                    <option value="是" @(Model.HadUlcerBeforeVisit == "是" ? "selected" : null)>是</option>
+                                    <option value="否" @(Model.HadUlcerBeforeVisit == "否" ? "selected" : null)>否</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">是否足部术后患者</label>
+                                <select class="form-select" name="IsPostFootSurgeryPatient">
+                                    <option value="">请选择</option>
+                                    <option value="是" @(Model.IsPostFootSurgeryPatient == "是" ? "selected" : null)>是</option>
+                                    <option value="否" @(Model.IsPostFootSurgeryPatient == "否" ? "selected" : null)>否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary text-white">保存信息</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

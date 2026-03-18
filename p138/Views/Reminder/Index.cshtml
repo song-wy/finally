@@ -1,0 +1,135 @@
+@model List<DiabetesPatientApp.Models.Reminder>
+
+@{
+    ViewData["Title"] = "提醒设置";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>提醒设置</h2>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 28%;">提醒类型</th>
+                    <th style="width: 42%;">消息通知</th>
+                    <th style="width: 15%;">状态</th>
+                    <th style="width: 15%;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>血糖记录提醒</strong></td>
+                    <td>
+                        @{
+                            var completion = ViewBag.BloodSugarCompletion as List<DiabetesPatientApp.Models.BloodSugarSlotStatus>;
+                            var incompleteCount = (completion != null && completion.Count > 0)
+                                ? completion.Count(s => string.Equals(s.StatusCode, "Incomplete", StringComparison.OrdinalIgnoreCase))
+                                : 0;
+
+                            if (incompleteCount > 0)
+                            {
+                                <span class="position-relative d-inline-block">
+                                    未完成
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">@incompleteCount</span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span>已完成</span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if (Model != null && Model.Any(r => r.IsActive))
+                        {
+                            <span class="badge bg-success">已启用</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">未设置</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Create")" class="btn btn-sm btn-primary">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>伤口监护提醒</strong></td>
+                    <td>
+                        @{
+                            var woundStatusCode = (ViewBag.WoundReminderStatusCode as string) ?? "";
+                            if (string.Equals(woundStatusCode, "Incomplete", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <span class="position-relative d-inline-block">
+                                    未完成
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">1</span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span>已完成</span>
+                            }
+                        }
+                    </td>
+                    <td><span class="badge bg-secondary">未设置</span></td>
+                    <td>
+                        <a href="@Url.Action("WoundReminder")" class="btn btn-sm btn-primary">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>足压监测提醒</strong></td>
+                    <td>
+                        @{
+                            var fpStatusCode = (ViewBag.FootPressureStatusCode as string) ?? "";
+                            var fpIncompleteCount = (int)(ViewBag.FootPressureIncompleteCount ?? 0);
+
+                            if (string.Equals(fpStatusCode, "Incomplete", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <span class="position-relative d-inline-block">
+                                    未完成
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">@Math.Max(1, fpIncompleteCount)</span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span>已完成</span>
+                            }
+                        }
+                    </td>
+                    <td><span class="badge bg-secondary">未设置</span></td>
+                    <td>
+                        <a href="@Url.Action("FootPressureReminder")" class="btn btn-sm btn-primary">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>聊天记录提醒</strong></td>
+                    <td>
+                        @{
+                            var chatUnreadCount = (int)(ViewBag.ChatReminderUnreadCount ?? 0);
+                            if (chatUnreadCount > 0)
+                            {
+                                <span class="position-relative d-inline-block">
+                                    未完成
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">@chatUnreadCount</span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span>已完成</span>
+                            }
+                        }
+                    </td>
+                    <td><span class="badge bg-secondary">未设置</span></td>
+                    <td>
+                        <a href="@Url.Action("ChatReminder")" class="btn btn-sm btn-primary">查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

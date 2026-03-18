@@ -1,0 +1,75 @@
+@model DiabetesPatientApp.ViewModels.DoctorPatientArchiveViewModel
+
+<div class="row mb-3">
+    <div class="col-12 col-lg-6">
+        <div class="card h-100">
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0">
+                    <tbody>
+                        <tr>
+                            <th style="width: 32%;">患者姓名</th>
+                            <td>@Model.PatientName</td>
+                        </tr>
+                        <tr>
+                            <th>用户名</th>
+                            <td>@Model.Username</td>
+                        </tr>
+                        <tr>
+                            <th>账号状态</th>
+                            <td>@(Model.IsActive ? "活跃" : "停用")</td>
+                        </tr>
+                        <tr>
+                            <th>性别</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.Gender) ? "未填写" : Model.Gender)</td>
+                        </tr>
+                        <tr>
+                            <th>年龄</th>
+                            <td>@(Model.Age.HasValue ? Model.Age.Value.ToString() : "未填写")</td>
+                        </tr>
+                        <tr>
+                            <th>联系方式</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "未填写" : Model.PhoneNumber)</td>
+                        </tr>
+                        <tr>
+                            <th>邮箱</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.Email) ? "未填写" : Model.Email)</td>
+                        </tr>
+                        <tr>
+                            <th>居住情况</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.ResidenceStatus) ? "未填写" : Model.ResidenceStatus)</td>
+                        </tr>
+                        <tr>
+                            <th>糖尿病足类型</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.DiabeticFootType) ? "未填写" : Model.DiabeticFootType)</td>
+                        </tr>
+                        <tr>
+                            <th>病程</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.DiseaseCourse) ? "未填写" : Model.DiseaseCourse)</td>
+                        </tr>
+                        <tr>
+                            <th>确诊日期</th>
+                            <td>@(Model.DiagnosisDate.HasValue ? Model.DiagnosisDate.Value.ToString("yyyy-MM-dd") : "未填写")</td>
+                        </tr>
+                        <tr>
+                            <th>就诊前是否已有溃疡</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.HadUlcerBeforeVisit) ? "未填写" : Model.HadUlcerBeforeVisit)</td>
+                        </tr>
+                        <tr>
+                            <th>是否足部术后患者</th>
+                            <td>@(string.IsNullOrWhiteSpace(Model.IsPostFootSurgeryPatient) ? "未填写" : Model.IsPostFootSurgeryPatient)</td>
+                        </tr>
+                        <tr>
+                            <th>注册时间</th>
+                            <td>@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                        <tr>
+                            <th>最近登录</th>
+                            <td>@(Model.LastLoginDate.HasValue ? Model.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm") : "暂无记录")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6"></div>
+</div>

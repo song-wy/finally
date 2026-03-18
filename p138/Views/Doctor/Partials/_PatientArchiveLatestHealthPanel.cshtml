@@ -1,0 +1,135 @@
+@model DiabetesPatientApp.ViewModels.DoctorPatientArchiveViewModel
+
+<form action='@Url.Action("DeleteSelectedHealthRecords", "Doctor")' method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="patientId" value="@Model.PatientId" />
+    <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>最近健康记录</span>
+            <button type="submit" class="btn btn-danger btn-sm text-white" onclick="return confirm('确定删除勾选的健康记录吗？');">删除</button>
+        </div>
+        <div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestBloodSugarRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestBloodSugarRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">血糖</div>
+                        @if (Model.LatestBloodSugarRecord != null)
+                        {
+                            <div>@Model.LatestBloodSugarRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestBloodSugarRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无血糖记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestWoundRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestWoundRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">伤口</div>
+                        @if (Model.LatestWoundRecord != null)
+                        {
+                            <div>@Model.LatestWoundRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestWoundRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无伤口记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestFootPressureRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestFootPressureRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">足压</div>
+                        @if (Model.LatestFootPressureRecord != null)
+                        {
+                            <div>@Model.LatestFootPressureRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestFootPressureRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无足压记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestMedicationRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestMedicationRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">用药</div>
+                        @if (Model.LatestMedicationRecord != null)
+                        {
+                            <div>@Model.LatestMedicationRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestMedicationRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无用药记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestDietRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestDietRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">饮食</div>
+                        @if (Model.LatestDietRecord != null)
+                        {
+                            <div>@Model.LatestDietRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestDietRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无饮食记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="d-flex gap-2">
+                    @if (Model.LatestExerciseRecord != null)
+                    {
+                        <input class="form-check-input mt-1" type="checkbox" name="selectedHealthItems" value="@Model.LatestExerciseRecord.ItemKey" />
+                    }
+                    <div>
+                        <div class="fw-semibold">运动</div>
+                        @if (Model.LatestExerciseRecord != null)
+                        {
+                            <div>@Model.LatestExerciseRecord.Summary</div>
+                            <small class="text-muted">@Model.LatestExerciseRecord.RecordDateTime.ToString("yyyy-MM-dd HH:mm")</small>
+                        }
+                        else
+                        {
+                            <div class="text-muted">暂无运动记录</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

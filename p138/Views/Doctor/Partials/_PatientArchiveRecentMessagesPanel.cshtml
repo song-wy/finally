@@ -1,0 +1,37 @@
+@model DiabetesPatientApp.ViewModels.DoctorPatientArchiveViewModel
+
+<form action='@Url.Action("DeleteSelectedConsultationMessages", "Doctor")' method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="patientId" value="@Model.PatientId" />
+    <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>最近咨询内容</span>
+            <button type="submit" class="btn btn-danger btn-sm text-white" onclick="return confirm('确定删除勾选的咨询内容吗？');">删除</button>
+        </div>
+        @if (Model.RecentMessages.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var message in Model.RecentMessages)
+                {
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div class="d-flex gap-2">
+                                <input class="form-check-input mt-1" type="checkbox" name="selectedMessageIds" value="@message.MessageId" />
+                                <div>
+                                    <div class="fw-semibold">@message.SenderName</div>
+                                    <div class="text-muted small">@message.Content</div>
+                                </div>
+                            </div>
+                            <small class="text-muted">@message.CreatedDate.ToString("MM-dd HH:mm")</small>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="card-body text-muted">暂无咨询消息。</div>
+        }
+    </div>
+</form>
+

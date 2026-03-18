@@ -1,0 +1,52 @@
+@model IEnumerable<DiabetesPatientApp.Models.EducationResource>
+@{
+    ViewData["Title"] = "健康宣教";
+    var items = (Model ?? Enumerable.Empty<DiabetesPatientApp.Models.EducationResource>()).ToList();
+}
+
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">健康宣教</h4>
+            <div class="text-muted small">医生上传的宣教短视频/资料会展示在这里。</div>
+        </div>
+    </div>
+
+    @if (items.Count == 0)
+    {
+        <div class="alert alert-light border">暂无宣教资源。</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var x in items)
+            {
+                var url = x.FileUrl ?? "";
+                var isVideo = (x.ResourceType ?? "") == "视频" || url.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase) || url.EndsWith(".webm", StringComparison.OrdinalIgnoreCase);
+                <div class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+                            <span>@x.Title</span>
+                            <span class="badge bg-secondary">@x.ResourceType</span>
+                        </div>
+                        <div class="card-body">
+                            @if (isVideo)
+                            {
+                                <video class="w-100 rounded border" controls preload="metadata" src="@url"></video>
+                            }
+                            else
+                            {
+                                <div class="text-muted small mb-2">文件：@x.OriginalFileName</div>
+                                <a class="btn btn-sm btn-outline-primary" href="@url" target="_blank">打开/下载</a>
+                            }
+                        </div>
+                        <div class="card-footer text-muted small">
+                            上传时间：@x.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+

@@ -1,0 +1,97 @@
+@model DiabetesPatientApp.ViewModels.DoctorPatientArchiveViewModel
+
+@{
+    ViewData["Title"] = "患者档案";
+}
+
+<div class="container-fluid mt-3">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">患者档案</h4>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-primary text-white" href="@Url.Action("PatientArchives", "Doctor")">返回</a>
+        </div>
+    </div>
+
+    <div id="patientBasicInfoPanel">
+        @await Html.PartialAsync("~/Views/Doctor/Partials/_PatientArchiveBasicInfoPanel.cshtml", Model)
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-lg-6" id="patientLatestHealthPanel">
+            @await Html.PartialAsync("~/Views/Doctor/Partials/_PatientArchiveLatestHealthPanel.cshtml", Model)
+        </div>
+
+        <div class="col-12 col-lg-6" id="patientRecentMessagesPanel">
+            @await Html.PartialAsync("~/Views/Doctor/Partials/_PatientArchiveRecentMessagesPanel.cshtml", Model)
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var patientId = @Model.PatientId;
+            var lastVersion = null;
+            var isRefreshing = false;
+
+            async function fetchJson(url) {
+                var res = await fetch(url, { method: 'GET', credentials: 'same-origin' });
+                return await res.json();
+            }
+
+            async function fetchHtml(url) {
+                var res = await fetch(url, { method: 'GET', credentials: 'same-origin' });
+                return await res.text();
+            }
+
+            async function refreshPanelsIfNeeded() {
+                if (isRefreshing) return;
+                isRefreshing = true;
+                try {
+                    var versionResp = await fetchJson('@Url.Action("PatientArchiveVersion", "Doctor")' + '?patientId=' + encodeURIComponent(patientId));
+                    if (!versionResp || versionResp.success !== true) return;
+
+                    if (lastVersion === null) {
+                        lastVersion = versionResp.version;
+                        return;
+                    }
+
+                    if (versionResp.version === lastVersion) return;
+                    lastVersion = versionResp.version;
+
+                    var panelUrls = [
+                        { id: 'patientBasicInfoPanel', url: '@Url.Action("PatientArchiveBasicInfoPartial", "Doctor")' + '?patientId=' + encodeURIComponent(patientId) },
+                        { id: 'patientLatestHealthPanel', url: '@Url.Action("PatientArchiveLatestHealthPartial", "Doctor")' + '?patientId=' + encodeURIComponent(patientId) },
+                        { id: 'patientRecentMessagesPanel', url: '@Url.Action("PatientArchiveRecentMessagesPartial", "Doctor")' + '?patientId=' + encodeURIComponent(patientId) }
+                    ];
+
+                    var htmlList = await Promise.all(panelUrls.map(function (x) { return fetchHtml(x.url); }));
+                    for (var i = 0; i < panelUrls.length; i++) {
+                        var container = document.getElementById(panelUrls[i].id);
+                        if (container) container.innerHTML = htmlList[i];
+                    }
+                } catch (e) {
+                    // ignore
+                } finally {
+                    isRefreshing = false;
+                }
+            }
+
+            // 初次拉取版本号，然后轮询刷新
+            refreshPanelsIfNeeded();
+            setInterval(refreshPanelsIfNeeded, 5000);
+        });
+    </script>
+}

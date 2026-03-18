@@ -1,0 +1,212 @@
+@using System.Linq
+@using System.Net
+@{
+    ViewData["Title"] = "首页";
+    var carouselImages = (ViewBag.CarouselImages as IEnumerable<string>)?.ToList() ?? new List<string>();
+    var articleContent = ViewBag.ArticleContent as string;
+    IEnumerable<string>? rawParagraphs = ViewBag.ArticleParagraphs as IEnumerable<string>;
+    List<string> articleParagraphs = rawParagraphs?.ToList() ?? new List<string>();
+    var hasUploadedCarousel = carouselImages.Any();
+}
+
+<style>
+    .carousel-container {
+        margin-bottom: 40px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(11, 58, 102, 0.1);
+    }
+
+    .carousel img {
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .search-container {
+        margin-bottom: 40px;
+    }
+
+    .search-bar {
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .search-bar input:focus {
+        outline: none;
+        border-color: #0b3a66;
+        box-shadow: 0 0 0 4px rgba(11, 58, 102, 0.08);
+    }
+
+    .search-bar button {
+        padding: 12px 32px;
+        background: #0b3a66;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .search-bar button:hover {
+        background: #072a4b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(11, 58, 102, 0.2);
+    }
+
+    .news-card {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-left: 4px solid #0b3a66;
+    }
+    .dynamic-article-column {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 16px 20px;
+        min-height: 140px;
+        box-shadow: inset 0 1px 2px rgba(11, 58, 102, 0.08);
+        color: #32475c;
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+    .news-card h3 {
+        color: #0b3a66;
+        margin-bottom: 12px;
+        font-size: 18px;
+    }
+
+    .news-card p {
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .news-card a {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #0b3a66;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s;
+        font-size: 14px;
+    }
+
+    .news-card a:hover {
+        background: #072a4b;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="carousel-container">
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @if (hasUploadedCarousel)
+            {
+                for (var i = 0; i < carouselImages.Count; i++)
+                {
+                    var image = carouselImages[i];
+                    var cssClass = i == 0 ? "carousel-item active" : "carousel-item";
+                    <div class="@cssClass">
+                        <img src="@image" alt="患者轮播图 @i">
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=400&fit=crop" alt="糖尿病足护理">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1631217314234-cf3ee645dbf1?w=1200&h=400&fit=crop" alt="足部健康">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1579154204601-01d8f6bccc47?w=1200&h=400&fit=crop" alt="医疗护理">
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="search-container">
+    <h3 style="color: #0b3a66; margin-bottom: 16px;">糖尿病足知识搜索</h3>
+    <div class="search-bar">
+        <input type="text" id="searchKeyword" placeholder="输入关键词搜索糖尿病足相关知识...">
+        <button type="button" onclick="searchDiabeticFootKnowledge()">搜索</button>
+    </div>
+</div>
+
+<div class="news-card">
+    <h3>糖尿病足护理的重要性</h3>
+    @if (articleParagraphs is { Count: > 0 } paragraphs)
+    {
+        <div class="row g-3">
+            @for (int index = 0; index < paragraphs.Count; index++)
+            {
+                var columnClass = paragraphs.Count > 1 ? "col-md-6" : "col-12";
+                <div class="@columnClass">
+                    <div class="dynamic-article-column">
+                        @Html.Raw(WebUtility.HtmlEncode(paragraphs[index]).Replace("\r\n", "<br />").Replace("\n", "<br />"))
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>
+            糖尿病足是一种严重的糖尿病并发症，可能导致感染、溃疡甚至截肢。据世界卫生组织数据，全球每30秒就有一人因糖尿病足相关并发症而被迫截肢。
+        </p>
+        <p>
+            早期发现和及时治疗是降低这一风险的关键。建议糖尿病患者：
+        </p>
+        <ul style="margin-left: 20px; color: #4b5563; line-height: 1.8;">
+            <li>每天检查足部是否有伤口、红肿或破皮</li>
+            <li>保持足部清洁干燥，定期修剪指甲</li>
+            <li>穿着合适的、透气的鞋袜</li>
+            <li>定期进行足部压力检查和血糖监测</li>
+            <li>如发现异常，应立即就医</li>
+        </ul>
+        <p style="margin-top: 16px;">
+            本平台提供全面的血糖监测、伤口记录和足部压力监测工具，帮助您更好地管理糖尿病足健康。通过与医护人员在线咨询，可以获得专业的医疗建议和指导。
+        </p>
+        <a href="https://www.who.int/health-topics/diabetes" target="_blank">了解更多世界卫生组织信息</a>
+    }
+</div>
+
+<script>
+    function searchDiabeticFootKnowledge() {
+        const keyword = document.getElementById('searchKeyword').value;
+        const q = (keyword || '').trim();
+        if (!q) return;
+
+        // 直接跳转到浏览器搜索结果页（避免 window.open 被拦截，且国内环境更可用）
+        const url = 'https://www.baidu.com/s?wd=' + encodeURIComponent(q + ' 糖尿病足');
+        window.location.href = url;
+    }
+
+    document.getElementById('searchKeyword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchDiabeticFootKnowledge();
+        }
+    });
+</script>
+

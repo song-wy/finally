@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086936816325484.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\76_639086936816325484.jpeg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\76_639086937233647327.pdf",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\76_639086937233647327.pdf"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090184493919183.docx",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\7_639090184493919183.docx"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639090196626847604.png",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\7_639090196626847604.png"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094492724860095.png",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\7_639094492724860095.png"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\consultation\\7_639094659149198243.png",
+      "PackagePath": "staticwebassets\\uploads\\consultation\\7_639094659149198243.png"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\docs\\20251113180607236_图片.jpg",
+      "PackagePath": "staticwebassets\\uploads\\docs\\20251113180607236_图片.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx",
+      "PackagePath": "staticwebassets\\uploads\\education\\20260318201059_f45436252d364999a94bd403b8d7f17b.docx"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639088666336723322.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\3_639088666336723322.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639090922779358577.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\3_639090922779358577.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\3_639093513171420543.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\3_639093513171420543.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985477458193660.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_638985477458193660.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_638985528365542425.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_638985528365542425.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086770454131201.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_639086770454131201.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086773192482052.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_639086773192482052.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086774722895297.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_639086774722895297.jpg"
+    },
+    {
+      "Id": "E:\\桌面\\软工+大创\\毕业设计\\DiaBetes\\p138\\p138\\wwwroot\\uploads\\wounds\\76_639086926285140986.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wounds\\76_639086926285140986.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DiabetesPatientApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DiabetesPatientApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.DiabetesPatientApp.props",
+      "PackagePath": "build\\DiabetesPatientApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.DiabetesPatientApp.props",
+      "PackagePath": "buildMultiTargeting\\DiabetesPatientApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.DiabetesPatientApp.props",
+      "PackagePath": "buildTransitive\\DiabetesPatientApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

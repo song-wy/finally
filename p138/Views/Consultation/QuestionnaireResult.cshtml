@@ -1,0 +1,198 @@
+@model DiabetesPatientApp.ViewModels.QuestionnaireResultPageViewModel
+
+@{
+    ViewData["Title"] = "问卷生成结果";
+}
+
+<style>
+    .questionnaire-a4 {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #fff;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card {
+        border: none;
+        box-shadow: none;
+        border-radius: 12px;
+    }
+
+    .questionnaire-a4 .card-body {
+        padding: 18mm 16mm;
+    }
+
+    .patient-dropdown {
+        position: relative;
+    }
+
+    .patient-dropdown summary {
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .patient-dropdown summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .patient-dropdown-toggle {
+        min-height: 44px;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        background: #fff;
+        padding: 0.5rem 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .patient-dropdown-menu {
+        margin-top: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        background: #fff;
+        padding: 0.75rem;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+
+    .patient-dropdown-hint {
+        color: #6c757d;
+    }
+
+    @@media (max-width: 900px) {
+        .questionnaire-a4 {
+            width: 100%;
+            min-height: auto;
+        }
+
+        .questionnaire-a4 .card-body {
+            padding: 20px;
+        }
+    }
+
+    @@media print {
+        .questionnaire-actions {
+            display: none !important;
+        }
+
+        .questionnaire-a4 {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .questionnaire-a4 .card-body {
+            padding: 12mm;
+        }
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success questionnaire-actions">@successMessage</div>
+    }
+
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger questionnaire-actions">@errorMessage</div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>问卷生成结果</h2>
+        </div>
+        <div class="col-md-4 text-end questionnaire-actions">
+            <a href="@Url.Action("Index", "Consultation")" class="btn btn-secondary">返回健康问卷</a>
+        </div>
+    </div>
+
+    <div class="card mb-4 questionnaire-actions">
+        <div class="card-body">
+            <form action="@Url.Action("SendQuestionnaireToPatient", "Consultation")" method="post">
+                @Html.AntiForgeryToken()
+                <div class="row g-3 align-items-start">
+                    <div class="col-md-8">
+                        <details class="patient-dropdown">
+                            <summary class="patient-dropdown-toggle">
+                                <span class="patient-dropdown-hint">请选择患者</span>
+                                <span>▼</span>
+                            </summary>
+                            <div class="patient-dropdown-menu">
+                                @foreach (var patient in Model.Patients)
+                                {
+                                    var checkboxId = $"patient_{patient.PatientId}";
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="patientIds" id="@checkboxId" value="@patient.PatientId" @(Model.SelectedPatientIds.Contains(patient.PatientId) ? "checked" : null) />
+                                        <label class="form-check-label" for="@checkboxId">@patient.DisplayName</label>
+                                    </div>
+                                }
+                            </div>
+                        </details>
+                    </div>
+                    <div class="col-md-auto">
+                        <button type="submit" class="btn btn-primary text-white">发送给患者</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="questionnaire-a4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>生成结果</span>
+            <small class="text-muted">@Model.Questionnaire.Source @Model.Questionnaire.GeneratedAt.ToString("yyyy-MM-dd HH:mm")</small>
+        </div>
+        <div class="card-body">
+            <h4 class="mb-3">@Model.Questionnaire.Title</h4>
+            @if (!string.IsNullOrWhiteSpace(Model.Questionnaire.Introduction))
+            {
+                <div class="text-muted mb-3">@Model.Questionnaire.Introduction</div>
+            }
+
+            @if (Model.Questionnaire.Questions.Any())
+            {
+                var isKnowledgeScale = (Model.Questionnaire.Title ?? string.Empty).Contains("了解程度量表", StringComparison.OrdinalIgnoreCase);
+                var scaleLabels = new[] { "完全不了解", "一点点了解", "一般", "较了解", "非常了解" };
+
+                <div class="d-grid gap-3">
+                    @for (var i = 0; i < Model.Questionnaire.Questions.Count; i++)
+                    {
+                        var question = Model.Questionnaire.Questions[i];
+                        <div class="border rounded p-3">
+                            <div class="fw-semibold mb-3">@(i + 1). @question</div>
+
+                            <div>
+                                <div class="form-label mb-2">@(isKnowledgeScale ? "了解程度" : "1-5级评分")</div>
+                                <div class="d-flex flex-wrap gap-3">
+                                    @for (var level = 1; level <= 5; level++)
+                                    {
+                                        var optionId = $"question_{i}_level_{level}";
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="question_@(i)_level" id="@optionId" value="@level" />
+                                            <label class="form-check-label" for="@optionId">
+                                                @(isKnowledgeScale ? scaleLabels[level - 1] : $"{level} 级")
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                                @if (!isKnowledgeScale)
+                                {
+                                    <div class="small text-muted mt-2">分值越高，代表问题越明显、风险越高或越需要重点处理。</div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    </div>
+</div>

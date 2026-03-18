@@ -1,0 +1,174 @@
+@model IEnumerable<DiabetesPatientApp.Models.OtherDepartmentDoctor>
+@{
+    ViewData["Title"] = "多学科会诊";
+    var list = (Model ?? Enumerable.Empty<DiabetesPatientApp.Models.OtherDepartmentDoctor>()).ToList();
+    var departments = list
+        .Where(d => !string.IsNullOrWhiteSpace(d.Department))
+        .Select(d => d.Department.Trim())
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .OrderBy(d => d)
+        .ToList();
+}
+
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h2 class="mb-1">多学科会诊</h2>
+            <div class="text-muted small">系统自动提供其他科室医生信息，便于发起多学科协同会诊。</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header fw-bold">选择科室与医生</div>
+        <div class="card-body">
+            @if (list.Count == 0)
+            {
+                <div class="text-muted">暂无数据。请重启应用以完成初始化数据写入。</div>
+            }
+            else
+            {
+                <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-5">
+                        <label class="form-label small text-muted mb-1">科室</label>
+                        <select id="deptSelect" class="form-select">
+                            <option value="">请选择科室</option>
+                            @foreach (var dep in departments)
+                            {
+                                <option value="@dep">@dep</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <label class="form-label small text-muted mb-1">医生</label>
+                        <select id="doctorSelect" class="form-select" disabled>
+                            <option value="">请先选择科室</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="doctorInfo" class="mt-3" style="display:none;">
+                    <div class="card border">
+                        <div class="card-body">
+                            <div class="fw-bold mb-2">医生信息</div>
+                            <div class="row g-2">
+                                <div class="col-12 col-md-6">
+                                    <div class="text-muted small">科室</div>
+                                    <div id="infoDept" class="fw-semibold"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="text-muted small">姓名</div>
+                                    <div id="infoName" class="fw-semibold"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="text-muted small">性别</div>
+                                    <div id="infoGender" class="fw-semibold"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="text-muted small">电话</div>
+                                    <div id="infoPhone" class="fw-semibold"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <a id="enterChatBtn" class="btn btn-primary text-white disabled" href="javascript:void(0)">进入会诊</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const doctors = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                list.Select(d => new {
+                    id = d.Id,
+                    department = (d.Department ?? "").Trim(),
+                    name = (d.Name ?? "").Trim(),
+                    gender = (d.Gender ?? "").Trim(),
+                    phoneNumber = (d.PhoneNumber ?? "").Trim()
+                }),
+                new System.Text.Json.JsonSerializerOptions
+                {
+                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                }
+            ));
+
+            const deptSelect = document.getElementById('deptSelect');
+            const doctorSelect = document.getElementById('doctorSelect');
+            const infoWrap = document.getElementById('doctorInfo');
+            const infoDept = document.getElementById('infoDept');
+            const infoName = document.getElementById('infoName');
+            const infoGender = document.getElementById('infoGender');
+            const infoPhone = document.getElementById('infoPhone');
+            const enterChatBtn = document.getElementById('enterChatBtn');
+
+            function setDoctorOptions(items) {
+                doctorSelect.innerHTML = '';
+                if (!items || items.length === 0) {
+                    const opt = document.createElement('option');
+                    opt.value = '';
+                    opt.textContent = '该科室暂无医生';
+                    doctorSelect.appendChild(opt);
+                    doctorSelect.disabled = true;
+                    return;
+                }
+
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.textContent = '请选择医生';
+                doctorSelect.appendChild(placeholder);
+
+                items.forEach(d => {
+                    const opt = document.createElement('option');
+                    opt.value = String(d.id);
+                    opt.textContent = d.name || '未命名医生';
+                    doctorSelect.appendChild(opt);
+                });
+
+                doctorSelect.disabled = false;
+            }
+
+            function clearInfo() {
+                infoWrap.style.display = 'none';
+                infoDept.textContent = '';
+                infoName.textContent = '';
+                infoGender.textContent = '';
+                infoPhone.textContent = '';
+                enterChatBtn.classList.add('disabled');
+                enterChatBtn.setAttribute('href', 'javascript:void(0)');
+            }
+
+            deptSelect.addEventListener('change', function () {
+                clearInfo();
+                const dep = (deptSelect.value || '').trim();
+                if (!dep) {
+                    doctorSelect.innerHTML = '<option value="">请先选择科室</option>';
+                    doctorSelect.disabled = true;
+                    return;
+                }
+                const filtered = doctors.filter(d => (d.department || '') === dep);
+                setDoctorOptions(filtered);
+            });
+
+            doctorSelect.addEventListener('change', function () {
+                clearInfo();
+                const id = parseInt(doctorSelect.value, 10);
+                if (!id) return;
+                const d = doctors.find(x => x.id === id);
+                if (!d) return;
+                infoDept.textContent = d.department || '—';
+                infoName.textContent = d.name || '—';
+                infoGender.textContent = d.gender || '—';
+                infoPhone.textContent = d.phoneNumber || '—';
+                infoWrap.style.display = '';
+
+                enterChatBtn.classList.remove('disabled');
+                enterChatBtn.setAttribute('href', `@Url.Action("MultidisciplinaryConsultationChat", "Doctor")?doctorId=${encodeURIComponent(String(d.id))}`);
+            });
+        })();
+    </script>
+}
+

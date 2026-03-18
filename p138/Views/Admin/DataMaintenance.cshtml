@@ -1,0 +1,171 @@
+@model DiabetesPatientApp.ViewModels.AdminDataMaintenanceViewModel
+@using System.Linq
+@{
+	ViewData["Title"] = "数据维护";
+}
+
+<div class="container-fluid h-100">
+	@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+	{
+		<div class="alert alert-info">@Model.StatusMessage</div>
+	}
+
+	<div class="card mt-3 flex-grow-1 d-flex flex-column">
+		<div class="card-header">信息维护</div>
+		<div class="card-body d-flex flex-column overflow-hidden">
+			<ul class="nav nav-tabs mb-3" id="maintenanceManageTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="manage-patient-tab" data-bs-toggle="tab" data-bs-target="#manage-patient" type="button" role="tab" aria-controls="manage-patient" aria-selected="true">患者维护</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="manage-doctor-tab" data-bs-toggle="tab" data-bs-target="#manage-doctor" type="button" role="tab" aria-controls="manage-doctor" aria-selected="false">医生维护</button>
+				</li>
+			</ul>
+			<div class="tab-content flex-grow-1" id="maintenanceManageTabContent">
+				<div class="tab-pane fade show active h-100" id="manage-patient" role="tabpanel" aria-labelledby="manage-patient-tab">
+					@if (Model.Patients.Any())
+					{
+						<div class="table-responsive h-100">
+							<table class="table align-middle table-bordered">
+								<thead class="table-light">
+									<tr>
+										<th style="width:8%;">ID</th>
+										<th style="width:16%;">用户名</th>
+										<th style="width:18%;">邮箱</th>
+										<th style="width:16%;">姓名</th>
+										<th style="width:14%;">电话</th>
+										<th style="width:14%;">新密码</th>
+										<th style="width:14%;">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var patient in Model.Patients)
+									{
+										var updateFormId = $"patient-update-{patient.UserId}";
+										var deleteFormId = $"patient-delete-{patient.UserId}";
+										var toggleFormId = $"patient-toggle-{patient.UserId}";
+										<tr>
+											<td>
+												<strong>@patient.UserId</strong>
+												<form id="@updateFormId" asp-action="UpdatePatient" method="post" style="display:none;">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="UserId" value="@patient.UserId" />
+												</form>
+												<form id="@deleteFormId" asp-action="DeletePatient" method="post" style="display:none;" onsubmit="return confirm('确认删除该患者吗？');">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="userId" value="@patient.UserId" />
+												</form>
+												<form id="@toggleFormId" asp-action="TogglePatientActive" method="post" style="display:none;">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="userId" value="@patient.UserId" />
+												</form>
+											</td>
+											<td class="text-muted small">@patient.Username</td>
+											<td class="text-muted small">@patient.Email</td>
+											<td>
+												<input class="form-control form-control-sm" name="FullName" form="@updateFormId" value="@patient.FullName" />
+											</td>
+											<td>
+												<input class="form-control form-control-sm" name="PhoneNumber" form="@updateFormId" value="@patient.PhoneNumber" />
+											</td>
+											<td>
+												<input class="form-control form-control-sm" name="Password" type="password" form="@updateFormId" placeholder="不修改可留空" />
+											</td>
+											<td>
+												<div class="d-flex flex-column flex-sm-row gap-1">
+													<button type="submit" form="@updateFormId" formmethod="post" formaction="@Url.Action("UpdatePatient","Admin")" class="btn btn-primary btn-sm">保存</button>
+													<button type="submit" form="@toggleFormId" formmethod="post" formaction="@Url.Action("TogglePatientActive","Admin")"
+															class="btn btn-sm @(patient.IsActive ? "btn-outline-warning" : "btn-outline-success")">
+														@(patient.IsActive ? "停用" : "启用")
+													</button>
+													<button type="submit" form="@deleteFormId" formmethod="post" formaction="@Url.Action("DeletePatient","Admin")" class="btn btn-primary btn-sm text-white">删除</button>
+												</div>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<div class="text-muted small">共 @Model.Patients.Count() 条记录</div>
+					}
+					else
+					{
+						<div class="text-muted">暂无患者记录。</div>
+					}
+				</div>
+				<div class="tab-pane fade h-100" id="manage-doctor" role="tabpanel" aria-labelledby="manage-doctor-tab">
+					@if (Model.Doctors.Any())
+					{
+						<div class="table-responsive h-100">
+							<table class="table align-middle table-bordered">
+								<thead class="table-light">
+									<tr>
+										<th style="width:8%;">ID</th>
+										<th style="width:16%;">用户名</th>
+										<th style="width:18%;">邮箱</th>
+										<th style="width:16%;">姓名</th>
+										<th style="width:14%;">电话</th>
+										<th style="width:14%;">新密码</th>
+										<th style="width:14%;">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var doctor in Model.Doctors)
+									{
+										var updateFormId = $"doctor-update-{doctor.UserId}";
+										var deleteFormId = $"doctor-delete-{doctor.UserId}";
+										var toggleFormId = $"doctor-toggle-{doctor.UserId}";
+										<tr>
+											<td>
+												<strong>@doctor.UserId</strong>
+												<form id="@updateFormId" asp-action="UpdateDoctor" method="post" style="display:none;">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="UserId" value="@doctor.UserId" />
+												</form>
+												<form id="@deleteFormId" asp-action="DeleteDoctor" method="post" style="display:none;" onsubmit="return confirm('确认删除该医生吗？');">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="userId" value="@doctor.UserId" />
+												</form>
+												<form id="@toggleFormId" asp-action="ToggleDoctorActive" method="post" style="display:none;">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="userId" value="@doctor.UserId" />
+												</form>
+											</td>
+											<td class="text-muted small">@doctor.Username</td>
+											<td class="text-muted small">@doctor.Email</td>
+											<td>
+												<input class="form-control form-control-sm" name="FullName" form="@updateFormId" value="@doctor.FullName" />
+											</td>
+											<td>
+												<input class="form-control form-control-sm" name="PhoneNumber" form="@updateFormId" value="@doctor.PhoneNumber" />
+											</td>
+											<td>
+												<input class="form-control form-control-sm" name="Password" type="password" form="@updateFormId" placeholder="不修改可留空" />
+											</td>
+											<td>
+												<div class="d-flex flex-column flex-sm-row gap-1">
+													<button type="submit" form="@updateFormId" formmethod="post" formaction="@Url.Action("UpdateDoctor","Admin")" class="btn btn-primary btn-sm">保存</button>
+													<button type="submit" form="@toggleFormId" formmethod="post" formaction="@Url.Action("ToggleDoctorActive","Admin")"
+															class="btn btn-sm @(doctor.IsActive ? "btn-outline-warning" : "btn-outline-success")">
+														@(doctor.IsActive ? "停用" : "启用")
+													</button>
+													<button type="submit" form="@deleteFormId" formmethod="post" formaction="@Url.Action("DeleteDoctor","Admin")" class="btn btn-primary btn-sm text-white">删除</button>
+												</div>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<div class="text-muted small">共 @Model.Doctors.Count() 条记录</div>
+					}
+					else
+					{
+						<div class="text-muted">暂无医生记录。</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

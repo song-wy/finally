@@ -1,0 +1,60 @@
+@model List<DiabetesPatientApp.Models.FootPressureReminderSlotStatus>
+
+@{
+    ViewData["Title"] = "足压监测提醒内容";
+    var statusCode = ViewBag.FootPressureReminderStatusCode as string ?? "Upcoming";
+    var statusText = ViewBag.FootPressureReminderStatusText as string ?? "未开始";
+    var thisWeekMonday = ViewBag.FootPressureThisWeekMonday as DateTime? ?? DateTime.Today;
+    var createUrl = Convert.ToString(ViewBag.FootPressureCreateUrl) ?? (Url.Action("Create", "FootPressure") ?? "#");
+}
+
+<div class="mt-3 px-3">
+    <div class="row mb-3">
+        <div class="col"><h4 class="mb-0">足压监测提醒内容</h4></div>
+        <div class="col-auto d-flex gap-2">
+            <a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <h6 class="mb-2">提醒说明</h6>
+        <p class="mb-2">系统会在<strong>每周一 12:00</strong> 和 <strong>每周一 19:00</strong> 自动提醒患者进行足压监测。</p>
+        <p class="text-muted small mb-2">如果足部压力界面在对应时间段内有上传数据，则该次显示“已完成”；若其中任意一次未完成，则本周足压监测提醒整体显示“未完成”。</p>
+        <p class="mb-3">
+            本周提醒日：<strong>@thisWeekMonday.ToString("yyyy-MM-dd")</strong>
+            <span class="ms-2 @(statusCode == "Completed" ? "text-success" : statusCode == "Incomplete" ? "text-danger" : statusCode == "Pending" ? "text-warning" : "text-muted")">@statusText</span>
+        </p>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm align-middle mb-2 bg-white">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 40%;">足压监测提醒内容</th>
+                        <th style="width: 35%;">提醒时间段</th>
+                        <th style="width: 25%;">本次完成情况</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var slot in Model)
+                    {
+                        var slotClass = slot.StatusCode switch
+                        {
+                            "Completed" => "text-success",
+                            "Incomplete" => "text-danger",
+                            "Pending" => "text-warning",
+                            _ => "text-muted"
+                        };
+                        <tr>
+                            <td>@slot.Label</td>
+                            <td>@slot.Range</td>
+                            <td><span class="@slotClass">@slot.StatusText</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <a href="@createUrl" class="btn btn-primary btn-sm">去上传足压监测数据</a>
+    </div>
+</div>
+

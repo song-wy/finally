@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "就医体验";
+    var emojiLabels = new[] { "非常不满意", "不满意", "一般", "满意", "非常满意" };
+    var emojiChars = new[] { "😠", "😕", "😐", "😊", "😍" };
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>就医体验</h2>
+        </div>
+    </div>
+
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <form action="@Url.Action("Index", "MedicalExperience")" method="post" id="experience-form">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">对医生的评价</label>
+                    <div class="d-flex flex-wrap gap-3 align-items-end mt-2">
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            var v = i + 1;
+                            <label class="d-flex flex-column align-items-center text-center rounded p-3 border border-2 experience-option" style="min-width: 80px; cursor: pointer;">
+                                <input type="radio" name="doctorRating" value="@v" class="form-check-input mb-2" required />
+                                <span class="fs-3">@emojiChars[i]</span>
+                                <span class="small text-muted mt-1">@emojiLabels[i]</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">对线上就医的评价</label>
+                    <div class="d-flex flex-wrap gap-3 align-items-end mt-2">
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            var v = i + 1;
+                            <label class="d-flex flex-column align-items-center text-center rounded p-3 border border-2 experience-option" style="min-width: 80px; cursor: pointer;">
+                                <input type="radio" name="onlineConsultRating" value="@v" class="form-check-input mb-2" required />
+                                <span class="fs-3">@emojiChars[i]</span>
+                                <span class="small text-muted mt-1">@emojiLabels[i]</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">对该系统的评价</label>
+                    <div class="d-flex flex-wrap gap-3 align-items-end mt-2">
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            var v = i + 1;
+                            <label class="d-flex flex-column align-items-center text-center rounded p-3 border border-2 experience-option" style="min-width: 80px; cursor: pointer;">
+                                <input type="radio" name="systemRating" value="@v" class="form-check-input mb-2" required />
+                                <span class="fs-3">@emojiChars[i]</span>
+                                <span class="small text-muted mt-1">@emojiLabels[i]</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary text-white">提交评价</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .experience-option { transition: background-color .2s, border-color .2s; }
+    .experience-option:hover { background-color: rgba(11, 58, 102, 0.06); border-color: rgba(11, 58, 102, 0.3) !important; }
+    .experience-option:has(input:checked) { background-color: rgba(11, 58, 102, 0.1); border-color: var(--brand-dark, #0b3a66) !important; }
+</style>

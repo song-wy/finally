@@ -1,0 +1,175 @@
+@{
+    ViewData["Title"] = "新增血糖记录";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h4 class="mb-0">新增血糖记录</h4>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-sm text-white">返回列表</a>
+        </div>
+    </div>
+
+<div class="px-3">
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+
+                    <form method="post" class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="recordDate" class="form-label">日期</label>
+                            <input type="date" class="form-control" id="recordDate" name="recordDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="recordTime" class="form-label">时间</label>
+                            <input type="time" class="form-control" id="recordTime" name="recordTime" value="@DateTime.Now.ToString("HH:mm")" required>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="mealType" class="form-label">餐次</label>
+                            <select class="form-control" id="mealType" name="mealType" required>
+                                <option value="">-- 请选择 --</option>
+                                <option value="AfterMeal">餐后</option>
+                                <option value="Fasting">空腹</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="bloodSugarValue" class="form-label">血糖值 (mmol/L)</label>
+                            <input type="number" class="form-control" id="bloodSugarValue" name="bloodSugarValue" step="0.01" required>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>进食记录</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="stapleFood" class="form-label">主食</label>
+                                            <input type="text" class="form-control" id="stapleFood" name="stapleFood" placeholder="如：米饭/面条/馒头">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="proteinFood" class="form-label">蛋白质</label>
+                                            <input type="text" class="form-control" id="proteinFood" name="proteinFood" placeholder="如：鸡蛋/牛奶/鱼肉">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="vegetableFood" class="form-label">蔬菜</label>
+                                            <input type="text" class="form-control" id="vegetableFood" name="vegetableFood" placeholder="如：青菜/西兰花">
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="intakeAmount" class="form-label">进食量</label>
+                                            <select class="form-control" id="intakeAmount" name="intakeAmount">
+                                                <option value="">-- 请选择 --</option>
+                                                <option value="正常">正常</option>
+                                                <option value="偏少">偏少</option>
+                                                <option value="偏多">偏多</option>
+                                                <option value="拒食">拒食</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label">特殊情况（可多选）</label>
+                                            <div class="d-flex flex-wrap gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="sc1" name="specialConditions" value="恶心呕吐">
+                                                    <label class="form-check-label" for="sc1">恶心呕吐</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="sc2" name="specialConditions" value="腹泻">
+                                                    <label class="form-check-label" for="sc2">腹泻</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="sc3" name="specialConditions" value="空腹过久">
+                                                    <label class="form-check-label" for="sc3">空腹过久</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="scNone" name="specialConditions" value="无">
+                                                    <label class="form-check-label" for="scNone">无</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>用药记录</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="medicationDose" class="form-label">用药剂量</label>
+                                            <input type="text" class="form-control" id="medicationDose" name="medicationDose" placeholder="如：胰岛素 8U；二甲双胍 1片">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="medicationRecord" class="form-label">用药说明</label>
+                                            <textarea class="form-control" id="medicationRecord" name="medicationRecord" rows="2" placeholder="如：用药时间、用药后反应等"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>运动记录</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="exerciseType" class="form-label">运动类型</label>
+                                            <input type="text" class="form-control" id="exerciseType" name="exerciseType" placeholder="如：散步/慢跑/游泳">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="exerciseDuration" class="form-label">运动时长（分钟）</label>
+                                            <input type="number" class="form-control" id="exerciseDuration" name="exerciseDuration" min="0" placeholder="如：30">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="exerciseNote" class="form-label">运动说明</label>
+                                            <textarea class="form-control" id="exerciseNote" name="exerciseNote" rows="2" placeholder="如：运动强度、身体反应等"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-sm text-white me-2">保存</button>
+                        </div>
+                    </form>
+</div>
+</div>
+
+<script>
+    (function () {
+        const none = document.getElementById('scNone');
+        if (!none) return;
+
+        const others = ['sc1', 'sc2', 'sc3']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+
+        none.addEventListener('change', function () {
+            if (!none.checked) return;
+            others.forEach(cb => cb.checked = false);
+        });
+
+        others.forEach(cb => {
+            cb.addEventListener('change', function () {
+                if (cb.checked) none.checked = false;
+            });
+        });
+    })();
+</script>
+

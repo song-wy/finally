@@ -1,0 +1,54 @@
+@model List<DiabetesPatientApp.Models.User>
+
+@{
+    ViewData["Title"] = "在线咨询";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>医生列表</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-secondary">返回</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>姓名</th>
+                        <th>职位</th>
+                        <th>邮箱</th>
+                        <th>电话</th>
+                        <th style="width: 120px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <td>@(doctor.FullName ?? "—")</td>
+                            <td>@(doctor.UserType == "Doctor" ? "医生" : "护士")</td>
+                            <td>@(doctor.Email ?? "—")</td>
+                            <td>@(doctor.PhoneNumber ?? "未提供")</td>
+                            <td>
+                                <a href="@Url.Action("Chat", new { doctorId = doctor.UserId })" class="btn btn-primary btn-sm">开始咨询</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            暂无医生
+        </div>
+    }
+</div>
+

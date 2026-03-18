@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "新增足部压力记录";
+}
+
+<style>
+    .btn, .btn:hover, .btn:focus, .btn:active {
+        color: #fff !important;
+    }
+</style>
+
+<div class="mt-3 px-3">
+    <div class="row mb-3">
+        <div class="col"><h4 class="mb-0">新增足部压力记录（请先穿戴好减压鞋垫再记录）</h4></div>
+        <div class="col-auto"><a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a></div>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                @foreach (var error in modelState.Errors)
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            }
+        </div>
+    }
+
+    <form method="post" class="row g-3">
+        <div class="col-sm-6">
+            <label for="recordDate" class="form-label">日期 <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" id="recordDate" name="recordDate" 
+                   value="@(Convert.ToString(ViewBag.DefaultRecordDate) ?? DateTime.Now.ToString("yyyy-MM-dd"))" required />
+        </div>
+
+        <div class="col-sm-6">
+            <label for="recordTime" class="form-label">时间 <span class="text-danger">*</span></label>
+            <input type="time" class="form-control" id="recordTime" name="recordTime" 
+                   value="@(Convert.ToString(ViewBag.DefaultRecordTime) ?? DateTime.Now.ToString("HH:mm"))" required />
+        </div>
+
+        <div class="col-12">
+            <h5 style="color: #0b3a66; margin-bottom: 12px;">左脚压力数据</h5>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="leftFootPressure" class="form-label">压力值 (kPa)</label>
+            <input type="number" class="form-control" id="leftFootPressure" 
+                   name="leftFootPressure" step="0.01" min="0" />
+        </div>
+
+        <div class="col-sm-6">
+            <label for="leftFootStatus" class="form-label">状态</label>
+            <select class="form-select" id="leftFootStatus" name="leftFootStatus">
+                <option value="">自动判断</option>
+                <option value="低风险">低风险</option>
+                <option value="中风险">中风险</option>
+                <option value="高风险">高风险</option>
+                <option value="极高风险">极高风险</option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <h5 style="color: #0b3a66; margin-bottom: 12px;">右脚压力数据</h5>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="rightFootPressure" class="form-label">压力值 (kPa)</label>
+            <input type="number" class="form-control" id="rightFootPressure" 
+                   name="rightFootPressure" step="0.01" min="0" />
+        </div>
+
+        <div class="col-sm-6">
+            <label for="rightFootStatus" class="form-label">状态</label>
+            <select class="form-select" id="rightFootStatus" name="rightFootStatus">
+                <option value="">自动判断</option>
+                <option value="低风险">低风险</option>
+                <option value="中风险">中风险</option>
+                <option value="高风险">高风险</option>
+                <option value="极高风险">极高风险</option>
+            </select>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="walkingDuration" class="form-label">行走时长（分钟）</label>
+            <input type="number" class="form-control" id="walkingDuration" name="walkingDuration" min="0" />
+        </div>
+
+        <div class="col-12">
+            <label for="notes" class="form-label">备注</label>
+            <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+        </div>
+
+        <div class="col-12">
+        <button type="submit" class="btn btn-primary me-2">保存</button>
+        </div>
+    </form>
+</div>
+

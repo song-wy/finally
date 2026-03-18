@@ -1,0 +1,83 @@
+@model DiabetesPatientApp.ViewModels.DashboardStatisticsViewModel
+
+@{
+    ViewData["Title"] = "数据统计详情";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>数据统计详情</h2>
+            <p class="text-muted mb-0">按北京时间统计今日、本周、本月的记录数据与未读消息。</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-sm">返回仪表板</a>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="fw-bold mb-2">今日总计</div>
+                    <div class="display-6">@Model.TodayTotalCount</div>
+                    <div class="text-muted small">@Model.TodayLabel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="fw-bold mb-2">本周总计</div>
+                    <div class="display-6">@Model.WeekTotalCount</div>
+                    <div class="text-muted small">@Model.WeekLabel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="fw-bold mb-2">本月总计</div>
+                    <div class="display-6">@Model.MonthTotalCount</div>
+                    <div class="text-muted small">@Model.MonthLabel</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 28%;">统计项目</th>
+                            <th style="width: 24%;">今日</th>
+                            <th style="width: 24%;">本周</th>
+                            <th style="width: 24%;">本月</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.Rows)
+                        {
+                            <tr>
+                                <td><strong>@row.Name</strong></td>
+                                <td>@row.TodayCount</td>
+                                <td>@row.WeekCount</td>
+                                <td>@row.MonthCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td><strong>合计</strong></td>
+                            <td><strong>@Model.TodayTotalCount</strong></td>
+                            <td><strong>@Model.WeekTotalCount</strong></td>
+                            <td><strong>@Model.MonthTotalCount</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

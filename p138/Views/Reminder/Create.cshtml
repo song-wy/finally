@@ -1,0 +1,107 @@
+@model List<DiabetesPatientApp.Models.Reminder>
+
+@{
+    ViewData["Title"] = "血糖记录提醒内容";
+}
+
+@functions {
+    private DiabetesPatientApp.Models.Reminder? GetByMeal(List<DiabetesPatientApp.Models.Reminder>? list, string key)
+    {
+        return (list ?? new List<DiabetesPatientApp.Models.Reminder>())
+            .FirstOrDefault(x => string.Equals(x.MealType, key, StringComparison.OrdinalIgnoreCase));
+    }
+}
+
+<div class="mt-3 px-3">
+    <div class="row mb-3">
+        <div class="col"><h4 class="mb-0">血糖记录提醒内容</h4></div>
+        <div class="col-auto"><a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a></div>
+    </div>
+
+    <div class="alert alert-info">
+        <h6 class="mb-2">提醒说明</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm align-middle mb-0 bg-white">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 40%;">血糖记录提醒内容</th>
+                        <th style="width: 25%;">提醒时间段</th>
+                        <th style="width: 15%;">今日完成情况</th>
+                        <th style="width: 20%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var rowDefs = new[]
+                        {
+                            new { Key = "Fasting", Label = "空腹提醒", Range = "06:00 - 08:00", DefaultTime = "06:00" },
+                            new { Key = "AfterMeal1", Label = "第一次餐后提醒", Range = "10:00 - 11:00", DefaultTime = "10:00" },
+                            new { Key = "AfterMeal2", Label = "第二次餐后提醒", Range = "13:00 - 14:00", DefaultTime = "13:00" },
+                            new { Key = "AfterMeal3", Label = "第三次餐后提醒", Range = "20:00 - 22:00", DefaultTime = "20:00" }
+                        };
+
+                        var completion = ViewBag.BloodSugarCompletion as List<DiabetesPatientApp.Models.BloodSugarSlotStatus>;
+                        var index = 0;
+                    }
+
+                    @foreach (var row in rowDefs)
+                    {
+                        var reminder = GetByMeal(Model, row.Key);
+                        DiabetesPatientApp.Models.BloodSugarSlotStatus? slot = null;
+                        if (completion != null && completion.Count > index)
+                        {
+                            slot = completion[index];
+                        }
+                        <tr>
+                            <td>@row.Label</td>
+                            <td>@row.Range</td>
+                            <td>
+                                @if (slot == null)
+                                {
+                                    <span class="text-muted">未开始</span>
+                                }
+                                else
+                                {
+                                    var statusClass = slot.StatusCode switch
+                                    {
+                                        "Completed" => "text-success",
+                                        "Incomplete" => "text-danger",
+                                        "Pending" => "text-warning",
+                                        _ => "text-muted"
+                                    };
+                                    <span class="@statusClass">@slot.StatusText</span>
+                                }
+                            </td>
+                            <td class="text-nowrap">
+                                @if (reminder == null)
+                                {
+                                    <form method="post" action="@Url.Action("UpsertPreset")" class="d-inline">
+                                        <input type="hidden" name="mealType" value="@row.Key" />
+                                        <input type="hidden" name="reminderTime" value="@row.DefaultTime" />
+                                        <button type="submit" class="btn btn-sm btn-success text-white">启用</button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-success text-white ms-1" disabled>编辑</button>
+                                    <button type="button" class="btn btn-sm btn-success text-white ms-1" disabled>删除</button>
+                                }
+                                else
+                                {
+                                    var toggleText = reminder.IsActive ? "禁用" : "启用";
+                                    var toggleBtnClass = reminder.IsActive ? "btn-outline-secondary" : "btn-success";
+                                    <form method="post" action="@Url.Action("ToggleActive")" class="d-inline">
+                                        <input type="hidden" name="id" value="@reminder.ReminderId" />
+                                        <button type="submit" class="btn btn-sm @toggleBtnClass text-white">@toggleText</button>
+                                    </form>
+                                    <a href="@Url.Action("Edit", new { id = reminder.ReminderId })" class="btn btn-sm btn-success text-white ms-1">编辑</a>
+                                    <form method="post" action="@Url.Action("Delete", new { id = reminder.ReminderId })" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-success text-white ms-1" onclick="return confirm('确定删除？')">删除</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

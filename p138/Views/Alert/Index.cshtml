@@ -1,0 +1,139 @@
+@model DiabetesPatientApp.ViewModels.AlertIndexViewModel
+@{
+    ViewData["Title"] = "预警触发";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>预警触发</h2>
+        </div>
+    </div>
+
+    @* 血糖异常 *@
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <span class="fw-bold">血糖异常</span>
+            <span class="badge bg-danger ms-2">@Model.BloodSugarAlerts.Count 条</span>
+        </div>
+        <div class="card-body">
+            @if (Model.BloodSugarAlerts.Count == 0)
+            {
+                <p class="text-muted mb-0">本周期内无高血糖/低血糖触发记录。</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日期时间</th>
+                                <th>类型</th>
+                                <th>血糖值 (mmol/L)</th>
+                                <th>状态</th>
+                                <th>推送状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in Model.BloodSugarAlerts)
+                            {
+                                var statusClass = r.Status == "High" ? "text-danger" : "text-warning";
+                                var statusText = r.Status == "High" ? "高血糖" : "低血糖";
+                                <tr>
+                                    <td>@r.RecordDate.ToString("yyyy-MM-dd") @r.RecordTime.ToString(@"hh\:mm")</td>
+                                    <td>@(r.MealType == "Fasting" ? "空腹" : (r.MealType == "AfterMeal" ? "餐后" : r.MealType ?? "—"))</td>
+                                    <td>@r.BloodSugarValueMmol</td>
+                                    <td class="@statusClass fw-semibold">@statusText</td>
+                                    <td class="text-success small">已自动发送到医生端</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* 足压高风险 *@
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <span class="fw-bold">足压高风险 / 极高风险</span>
+            <span class="badge bg-warning text-dark ms-2">@Model.FootPressureAlerts.Count 条</span>
+        </div>
+        <div class="card-body">
+            @if (Model.FootPressureAlerts.Count == 0)
+            {
+                <p class="text-muted mb-0">本周期内无足压高风险或极高风险记录。</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日期时间</th>
+                                <th>左脚</th>
+                                <th>右脚</th>
+                                <th>推送状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in Model.FootPressureAlerts)
+                            {
+                                var leftClass = r.LeftFootStatus == "极高风险" ? "bg-danger text-white" : (r.LeftFootStatus == "高风险" ? "bg-warning text-dark" : "");
+                                var rightClass = r.RightFootStatus == "极高风险" ? "bg-danger text-white" : (r.RightFootStatus == "高风险" ? "bg-warning text-dark" : "");
+                                <tr>
+                                    <td>@r.RecordDate.ToString("yyyy-MM-dd") @r.RecordTime.ToString(@"hh\:mm")</td>
+                                    <td><span class="badge @leftClass">@(r.LeftFootStatus ?? "—")</span></td>
+                                    <td><span class="badge @rightClass">@(r.RightFootStatus ?? "—")</span></td>
+                                    <td class="text-success small">已自动发送到医生端</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* 伤口异常 *@
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <span class="fw-bold">伤口异常</span>
+            <span class="badge bg-danger ms-2">@Model.WoundAlerts.Count 条</span>
+        </div>
+        <div class="card-body">
+            @if (Model.WoundAlerts.Count == 0)
+            {
+                <p class="text-muted mb-0">本周期内无感染/渗出/发热/异味等伤口异常记录。</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日期时间</th>
+                                <th>异常说明</th>
+                                <th>推送状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in Model.WoundAlerts)
+                            {
+                                <tr>
+                                    <td>@r.RecordDate.ToString("yyyy-MM-dd") @r.RecordTime.ToString(@"hh\:mm")</td>
+                                    <td class="text-danger">@r.GetStatusSummary()</td>
+                                    <td class="text-success small">已自动发送到医生端</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-2">
+                    <a href="@Url.Action("Index", "Wound")" class="btn btn-sm btn-outline-primary">查看全部伤口记录</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

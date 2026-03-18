@@ -1,0 +1,205 @@
+@model DiabetesPatientApp.Models.WoundRecord
+@using DiabetesPatientApp.Services
+
+@{
+    ViewData["Title"] = "伤口档案";
+    var aiResult = ViewBag.WoundAiResult as WoundImageAnalysisResult;
+    var aiError = ViewBag.WoundAiError as string;
+}
+
+<style>
+    .wound-edit-page {
+        padding: 1rem;
+        max-width: 230mm;
+        margin: 0 auto;
+    }
+    .wound-edit-top {
+        margin-bottom: 1rem;
+        text-align: right;
+    }
+    .wound-edit-bottom {
+        margin-top: 1.5rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+    .wound-a4 {
+        width: 100%;
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 15mm;
+        box-sizing: border-box;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,.1);
+    }
+    .wound-a4 .wound-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 0;
+    }
+    .wound-a4 .wound-table th,
+    .wound-a4 .wound-table td {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #dee2e6;
+        text-align: left;
+        vertical-align: top;
+    }
+    .wound-a4 .wound-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        width: 140px;
+    }
+    .wound-a4 .wound-table img {
+        max-width: 100%;
+        max-height: 320px;
+        display: block;
+    }
+    .wound-a4 .wound-table .form-control {
+        width: 100%;
+    }
+    .wound-a4 .archive-title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+    .wound-a4 .archive-datetime {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+    .wound-a4 .patient-info-section {
+        margin-bottom: 1rem;
+    }
+    .wound-a4 .patient-info-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .wound-a4 .section-desc { color: #6c757d; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .wound-a4 .text-muted { color: #6c757d; font-size: 0.9rem; margin-top: 0.5rem; }
+    .wound-page .btn { color: #fff !important; min-width: 90px; }
+</style>
+
+<div class="wound-edit-page wound-page">
+    <form method="post" action="@Url.Action("SaveToFolder")">
+        <input type="hidden" name="woundId" value="@Model.WoundId">
+        <input type="hidden" name="temperature" value="@Model.SurfaceTemperature">
+        <input type="hidden" name="notes" value="@(Model.Notes ?? "")">
+        <input type="hidden" name="hasInfection" value="@(Model.HasInfection ? "true" : "false")">
+        <input type="hidden" name="hasFever" value="@(Model.HasFever ? "true" : "false")">
+        <input type="hidden" name="hasOdor" value="@(Model.HasOdor ? "true" : "false")">
+        <input type="hidden" name="hasDischarge" value="@(Model.HasDischarge ? "true" : "false")">
+
+        @if (TempData["WoundMessage"] is string msg && !string.IsNullOrWhiteSpace(msg))
+        {
+            <div class="alert alert-info mb-3">@msg</div>
+        }
+
+        <div class="wound-edit-top">
+            <a href="@Url.Action("Index")" class="btn btn-secondary">返回列表</a>
+        </div>
+
+        <div class="wound-a4">
+            <div class="archive-title">伤口评估报告</div>
+            <div class="archive-datetime">记录时间: @Model.RecordDate.ToString("yyyy-MM-dd") @Model.RecordTime.ToString(@"hh\:mm")</div>
+
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <div class="patient-info-section">
+                <div class="patient-info-title">患者基本信息</div>
+                <table class="wound-table">
+                    <tr>
+                        <th>姓名</th>
+                        <td>@(Model.User?.FullName ?? "—")</td>
+                        <th>年龄</th>
+                        <td>
+                            @if (Model.User?.DateOfBirth != null)
+                            {
+                                var age = DateTime.Today.Year - Model.User.DateOfBirth.Value.Year;
+                                if (Model.User.DateOfBirth.Value.Date > DateTime.Today.AddYears(-age)) { age--; }
+                                @age
+                            }
+                            else
+                            {
+                                @:—
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>@(string.IsNullOrWhiteSpace(Model.User?.Gender) ? "—" : Model.User.Gender)</td>
+                        <th>联系电话</th>
+                        <td>@(string.IsNullOrWhiteSpace(Model.User?.PhoneNumber) ? "—" : Model.User.PhoneNumber)</td>
+                    </tr>
+                    <tr>
+                        <th>身份信息</th>
+                        <td colspan="3">@(Model.User != null ? (Model.User.UserType == "Patient" ? "患者" : Model.User.UserType == "Doctor" ? "医生" : Model.User.UserType == "Nurse" ? "护士" : Model.User.UserType ?? "—") : "—")</td>
+                    </tr>
+                </table>
+            </div>
+
+            <table class="wound-table">
+                <tr>
+                    <th>伤口照片</th>
+                    <td colspan="3">
+                        @if (!string.IsNullOrEmpty(Model.PhotoPath))
+                        {
+                            <img src="@Model.PhotoPath" alt="伤口照片">
+                        }
+                        else
+                        {
+                            <span class="text-muted">无</span>
+                        }
+                    </td>
+                </tr>
+            </table>
+
+            <div class="patient-info-section">
+                <div class="patient-info-title">AI伤口分析</div>
+                <p class="section-desc">@(aiResult != null ? "以下内容由 AI 根据您上传的伤口图片自动分析生成。" : !string.IsNullOrWhiteSpace(aiError) ? aiError : "上传伤口照片并保存后，将根据图片自动进行 AI 分析；若未显示结果，请确认已配置 OpenAI API 或稍后刷新本页。")</p>
+                <table class="wound-table">
+                    <tr><th>伤口位置及分级</th><td colspan="3">@(aiResult != null ? aiResult.LocationAndGrade : "—")</td></tr>
+                    <tr><th>创面大小</th><td colspan="3">@(aiResult != null ? aiResult.WoundSize : "—")</td></tr>
+                    <tr><th>创面外观</th><td colspan="3">@(aiResult != null ? aiResult.WoundAppearance : "—")</td></tr>
+                </table>
+            </div>
+
+            <div class="patient-info-section">
+                <div class="patient-info-title">感染倾向</div>
+                <p class="section-desc">@(aiResult != null ? "AI 根据伤口图片评估的感染倾向。" : "")</p>
+                <table class="wound-table">
+                    <tr><th>评估</th><td colspan="3">@(aiResult != null && !string.IsNullOrWhiteSpace(aiResult.InfectionTendency) ? aiResult.InfectionTendency : "—")</td></tr>
+                </table>
+            </div>
+
+            <div class="patient-info-section">
+                <div class="patient-info-title">提出建议</div>
+                <p class="section-desc">@(aiResult != null ? "AI 根据伤口图片给出的清创、换药与自我管理建议。" : "")</p>
+                <table class="wound-table">
+                    <tr><th>清创方式</th><td colspan="3">@(aiResult != null ? aiResult.DebridementSuggestion : "—")</td></tr>
+                    <tr><th>换药频率</th><td colspan="3">@(aiResult != null ? aiResult.DressingFrequencySuggestion : "—")</td></tr>
+                    <tr><th>患者自我管理</th><td colspan="3">@(aiResult != null ? aiResult.SelfManagementSuggestion : "—")</td></tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="wound-edit-bottom">
+            <button type="submit" class="btn btn-primary">保存至文件夹</button>
+            <a href="@Url.Action("Doctors", "Consultation")" class="btn btn-primary">问医生</a>
+        </div>
+    </form>
+</div>

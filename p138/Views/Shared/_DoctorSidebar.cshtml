@@ -1,0 +1,22 @@
+@{
+    var controller = (ViewContext.RouteData.Values["controller"] as string) ?? "";
+    var action = (ViewContext.RouteData.Values["action"] as string) ?? "";
+
+    string IsActive(string targetController, string? targetAction = null)
+    {
+        var controllerMatches = string.Equals(controller, targetController, System.StringComparison.OrdinalIgnoreCase);
+        var actionMatches = string.IsNullOrWhiteSpace(targetAction) || string.Equals(action, targetAction, System.StringComparison.OrdinalIgnoreCase);
+        return controllerMatches && actionMatches ? "active" : "";
+    }
+}
+
+<a class="@IsActive("Doctor", "Index")" href="@Url.Action("Index", "Doctor")">首页</a>
+<a class="@IsActive("Doctor", "PatientArchives")" href="@Url.Action("PatientArchives", "Doctor")">患者档案</a>
+<a class="@IsActive("Doctor", "PatientAlerts")" href="@Url.Action("PatientAlerts", "Doctor")">高危患者预警</a>
+<a class="@IsActive("Doctor", "CustomGroups")" href="@Url.Action("CustomGroups", "Doctor")">自定义分组</a>
+<a class="@IsActive("Doctor", "MultidisciplinaryConsultation")" href="@Url.Action("MultidisciplinaryConsultation", "Doctor")">多学科会诊</a>
+<a class="@IsActive("Doctor", "Orders")" href="@Url.Action("Orders", "Doctor")">医嘱与任务</a>
+<a class="@IsActive("Education", "DoctorManage")" href="@Url.Action("DoctorManage", "Education")">健康宣教</a>
+<a class="@IsActive("Doctor", "FollowUps")" href="@Url.Action("FollowUps", "Doctor")">回访登记</a>
+<a class="@IsActive("Doctor", "Notifications")" href="@Url.Action("Notifications", "Doctor")">消息通知</a>
+<a class="@IsActive("Consultation", "Index")" href="@Url.Action("Index", "Consultation")">健康问卷</a>

@@ -1,0 +1,108 @@
+@model DiabetesPatientApp.Models.Post
+
+@{
+    ViewData["Title"] = "帖子详情";
+    var currentUserId = Context.Session.GetInt32("UserId");
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-3">
+        <div class="col"></div>
+        <div class="col-auto">
+            <a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>@Model.Title</h4>
+                        <div>
+                            @if (Model.UserId == currentUserId)
+                            {
+                                <form method="post" action="@Url.Action("DeletePost", new { id = Model.PostId })" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('确定删除这个帖子吗？')">删除</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted">
+                            👤 @(Model.IsAnonymous ? "匿名用户" : Model.User?.FullName ?? "未知用户") 
+                            📅 @Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")
+                        </small>
+                    </div>
+                    <div class="mb-4">
+                        @Html.Raw(Model.Content.Replace("\n", "<br>"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 评论区 -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>💬 评论 (@Model.Comments.Count)</h5>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(TempData["Error"]?.ToString()))
+                    {
+                        <div class="alert alert-danger">@TempData["Error"]</div>
+                    }
+
+                    <!-- 添加评论表单 -->
+                    <form method="post" action="@Url.Action("AddComment")" class="mb-4">
+                        <input type="hidden" name="postId" value="@Model.PostId">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="content" rows="3" placeholder="写下您的评论..." required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isAnonymous" id="anonymousComment">
+                                <label class="form-check-label" for="anonymousComment">
+                                    匿名评论
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">发表评论</button>
+                        </div>
+                    </form>
+
+                    <!-- 评论列表 -->
+                    @if (Model.Comments != null && Model.Comments.Any())
+                    {
+                        @foreach (var comment in Model.Comments.OrderBy(c => c.CreatedDate))
+                        {
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <p class="mb-2">@Html.Raw(comment.Content.Replace("\n", "<br>"))</p>
+                                        <small class="text-muted">
+                                            👤 @(comment.IsAnonymous ? "匿名用户" : comment.User?.FullName ?? "未知用户") 
+                                            📅 @comment.CreatedDate.ToString("yyyy-MM-dd HH:mm")
+                                        </small>
+                                    </div>
+                                    @if (comment.UserId == currentUserId)
+                                    {
+                                        <form method="post" action="@Url.Action("DeleteComment", new { id = comment.CommentId, postId = Model.PostId })" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('确定删除这条评论吗？')">删除</button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center">暂无评论，快来发表第一条评论吧！</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

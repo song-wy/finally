@@ -1,0 +1,185 @@
+@model List<DiabetesPatientApp.Models.BloodSugarRecord>
+
+@{
+    ViewData["Title"] = "血糖趋势图";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>血糖趋势图</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Index", "BloodSugar")" class="btn btn-primary btn-sm text-white">返回列表</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">空腹血糖</h5>
+                    </div>
+                    <div class="card-body" style="position: relative; height: 38vh;">
+                        <canvas id="fastingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">餐后血糖</h5>
+                    </div>
+                    <div class="card-body" style="position: relative; height: 38vh;">
+                        <canvas id="afterMealChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <span class="me-2">生成分析报告：</span>
+                <a href="@Url.Action("Report", "BloodSugar", new { days = 7 })" class="btn btn-primary btn-sm text-white me-1">近7天</a>
+                <a href="@Url.Action("Report", "BloodSugar", new { days = 14 })" class="btn btn-primary btn-sm text-white me-1">近14天</a>
+                <a href="@Url.Action("Report", "BloodSugar", new { days = 30 })" class="btn btn-primary btn-sm text-white">近30天</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <h5>暂无数据</h5>
+                    <p>该时间段内暂无血糖记录。<a href="@Url.Action("Create", "BloodSugar")" class="alert-link">立即添加</a></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+@if (Model != null && Model.Count > 0)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fastingCanvas = document.getElementById('fastingChart');
+            const afterMealCanvas = document.getElementById('afterMealChart');
+            if (!fastingCanvas || !afterMealCanvas) return;
+
+            const fastingCtx = fastingCanvas.getContext('2d');
+            const afterMealCtx = afterMealCanvas.getContext('2d');
+            if (!fastingCtx || !afterMealCtx) return;
+
+            const fastingData = @Html.Raw(Json.Serialize(
+                Model
+                    .OrderBy(r => r.RecordDate)
+                    .ThenBy(r => r.RecordTime)
+                    .Where(r => string.Equals(r.MealType, "Fasting", StringComparison.OrdinalIgnoreCase))
+                    .Select(r => new
+                    {
+                        Label = r.RecordDate.ToString("MM-dd") + " " + r.RecordTime.ToString(@"hh\:mm"),
+                        Value = r.BloodSugarValueMmol
+                    })
+            ));
+
+            const afterMealData = @Html.Raw(Json.Serialize(
+                Model
+                    .OrderBy(r => r.RecordDate)
+                    .ThenBy(r => r.RecordTime)
+                    .Where(r => string.Equals(r.MealType, "AfterMeal", StringComparison.OrdinalIgnoreCase))
+                    .Select(r => new
+                    {
+                        Label = r.RecordDate.ToString("MM-dd") + " " + r.RecordTime.ToString(@"hh\:mm"),
+                        Value = r.BloodSugarValueMmol
+                    })
+            ));
+
+            function renderEmptyMessage(canvas, message) {
+                const parent = canvas.parentElement;
+                if (!parent) return;
+                canvas.style.display = 'none';
+                const div = document.createElement('div');
+                div.className = 'alert alert-info mb-0';
+                div.innerText = message;
+                parent.appendChild(div);
+            }
+
+            function createLineChart(ctx, labels, values, title, upperLimit, lowerLimit) {
+                const minValue = Math.min(...values);
+                const maxValue = Math.max(...values);
+                return new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [
+                            {
+                                label: title + ' (mmol/L)',
+                                data: values,
+                                borderColor: '#4a9d6f',
+                                backgroundColor: 'rgba(74, 157, 111, 0.1)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: '正常上限',
+                                data: labels.map(() => upperLimit),
+                                borderColor: 'rgba(220, 53, 69, 0.5)',
+                                borderDash: [5, 5],
+                                borderWidth: 1.5,
+                                fill: false,
+                                pointRadius: 0
+                            },
+                            {
+                                label: '正常下限',
+                                data: labels.map(() => lowerLimit),
+                                borderColor: 'rgba(255, 193, 7, 0.5)',
+                                borderDash: [5, 5],
+                                borderWidth: 1.5,
+                                fill: false,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { usePointStyle: true }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: minValue > 2.8 ? 2.8 : minValue - 0.6,
+                                max: maxValue < 10 ? 10 : maxValue + 0.6,
+                                title: { display: true, text: '血糖值 (mmol/L)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const fastingLabels = fastingData.map(d => d.label);
+            const fastingValues = fastingData.map(d => d.value);
+            if (fastingLabels.length === 0) {
+                renderEmptyMessage(fastingCanvas, '暂无空腹血糖记录');
+            } else {
+                createLineChart(fastingCtx, fastingLabels, fastingValues, '空腹血糖', 7.0, 4.4);
+            }
+
+            const afterMealLabels = afterMealData.map(d => d.label);
+            const afterMealValues = afterMealData.map(d => d.value);
+            if (afterMealLabels.length === 0) {
+                renderEmptyMessage(afterMealCanvas, '暂无餐后血糖记录');
+            } else {
+                createLineChart(afterMealCtx, afterMealLabels, afterMealValues, '餐后血糖', 10, 6);
+            }
+        });
+    </script>
+}
+

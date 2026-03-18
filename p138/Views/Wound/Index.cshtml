@@ -1,0 +1,66 @@
+@model List<DiabetesPatientApp.Models.WoundRecord>
+
+@{
+    ViewData["Title"] = "伤口监护";
+}
+
+<style>
+    .wound-page .btn { color: #fff !important; min-width: 90px; }
+</style>
+
+<div class="container-fluid mt-4 wound-page">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>伤口监护记录</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Create")" class="btn btn-primary">新增记录</a>
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-secondary">返回</a>
+        </div>
+    </div>
+
+    @if (TempData["SaveToFolderMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SaveToFolderMessage"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row">
+            @foreach (var record in Model)
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>@record.RecordDate.ToString("yyyy-MM-dd") @record.RecordTime.ToString(@"hh\:mm")</h5>
+                        </div>
+                        <div class="card-body">
+                            @if (!string.IsNullOrEmpty(record.PhotoPath))
+                            {
+                                <img src="@record.PhotoPath" class="img-fluid mb-3" style="max-height: 300px;" alt="伤口照片">
+                            }
+                        </div>
+                        <div class="card-footer">
+                            <a href="@Url.Action("Edit", new { id = record.WoundId })" class="btn btn-warning">AI伤口评估</a>
+                            <form method="post" action="@Url.Action("Delete")" style="display:inline;">
+                                <input type="hidden" name="woundId" value="@record.WoundId">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('确定删除？')">删除</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            暂无记录
+        </div>
+    }
+</div>
+

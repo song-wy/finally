@@ -1,0 +1,110 @@
+@model List<DiabetesPatientApp.Models.BloodSugarRecord>
+
+@{
+    ViewData["Title"] = "血糖记录";
+}
+
+@functions {
+    private static string GetDisplayNotes(string? notes)
+    {
+        if (string.IsNullOrWhiteSpace(notes)) return string.Empty;
+
+        var parts = notes.Split(
+            new[] { '。', '.' },
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+        );
+
+        var kept = parts
+            .Where(p =>
+                !p.StartsWith("进食记录", StringComparison.OrdinalIgnoreCase) &&
+                !p.StartsWith("用药记录", StringComparison.OrdinalIgnoreCase) &&
+                !p.StartsWith("运动记录", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        return kept.Count == 0 ? string.Empty : string.Join("。", kept);
+    }
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>血糖记录</h2>
+            <p class="text-muted small mb-0">显示最近 14 天内的记录，补记的往日数据也会显示在此列表中。</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="@Url.Action("Create")" class="btn btn-primary btn-sm text-white">新增记录</a>
+            <a href="@Url.Action("Trend")" class="btn btn-primary btn-sm text-white">查看趋势</a>
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary btn-sm text-white">返回</a>
+        </div>
+    </div>
+
+    @if (Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>时间</th>
+                        <th>餐次</th>
+                        <th>血糖值 (mmol/L)</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in Model)
+                    {
+                        <tr>
+                            <td>@record.RecordDate.ToString("yyyy-MM-dd") @record.RecordTime.ToString(@"hh\:mm")</td>
+                            <td>
+                                @switch(record.MealType)
+                                {
+                                    case "BeforeMeal":
+                                        <span>餐前</span>
+                                        break;
+                                    case "AfterMeal":
+                                        <span>餐后</span>
+                                        break;
+                                    case "Fasting":
+                                        <span>空腹</span>
+                                        break;
+                                }
+                            </td>
+                            <td>@record.BloodSugarValueMmol.ToString("F2")</td>
+                            <td>
+                                @switch(record.Status)
+                                {
+                                    case "Normal":
+                                        <span class="badge bg-success">正常</span>
+                                        break;
+                                    case "High":
+                                        <span class="badge bg-danger">偏高</span>
+                                        break;
+                                    case "Low":
+                                        <span class="badge bg-warning">偏低</span>
+                                        break;
+                                }
+                            </td>
+                            <td>@GetDisplayNotes(record.Notes)</td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = record.RecordId })" class="btn btn-sm btn-warning text-white">编辑</a>
+                                <form method="post" action="@Url.Action("Delete")" style="display:inline;">
+                                    <input type="hidden" name="recordId" value="@record.RecordId">
+                                    <button type="submit" class="btn btn-sm btn-danger text-white" onclick="return confirm('确定删除？')">删除</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            暂无记录
+        </div>
+    }
+</div>
+

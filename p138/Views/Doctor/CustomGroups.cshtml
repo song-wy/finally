@@ -1,0 +1,281 @@
+@model IEnumerable<DiabetesPatientApp.ViewModels.DoctorPatientSummary>
+
+@{
+    ViewData["Title"] = "自定义分组";
+    var groups = (ViewBag.Groups as List<DiabetesPatientApp.Models.DoctorCustomGroup>) ?? new List<DiabetesPatientApp.Models.DoctorCustomGroup>();
+    var maps = (ViewBag.GroupMaps as List<DiabetesPatientApp.Models.DoctorPatientGroupMap>) ?? new List<DiabetesPatientApp.Models.DoctorPatientGroupMap>();
+    var riskGroups = (ViewBag.RiskGroups as List<DiabetesPatientApp.ViewModels.DoctorRiskGroupSummary>) ?? new List<DiabetesPatientApp.ViewModels.DoctorRiskGroupSummary>();
+    var patients = (Model ?? Enumerable.Empty<DiabetesPatientApp.ViewModels.DoctorPatientSummary>()).ToList();
+
+    var defaultGroupNames = new[]
+    {
+        "重点关注对象",
+        "足部术后患者",
+        "就诊前已有溃疡患者"
+    };
+}
+
+<div class="container-fluid mt-3">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+    @if (TempData["Error"] is string errorMessage && !string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="mb-0">自定义分组</h4>
+            <div class="text-muted small">将患者快速划分为重点关注对象、足部术后患者、就诊前已有溃疡患者三个小组。</div>
+        </div>
+    </div>
+
+    @if (patients.Count == 0)
+    {
+        <div class="text-muted">暂无患者可分组。</div>
+    }
+    else
+    {
+        @if (riskGroups.Count > 0)
+        {
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="fw-semibold">异常风险分组（自动）</div>
+                    <div class="text-muted small">基于患者近30天异常数据自动归类，仅用于清晰查看患者情况。</div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                @foreach (var rg in riskGroups)
+                {
+                    var memberSet = (rg.PatientIds ?? new List<int>()).ToHashSet();
+                    var members = patients.Where(p => memberSet.Contains(p.UserId)).OrderBy(p => p.DisplayName).ToList();
+                    <div class="col-12 col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div class="fw-semibold">@rg.Title</div>
+                                <span class="badge @rg.BadgeClass">@(members.Count) 人</span>
+                            </div>
+                            <div class="card-body">
+                                @if (members.Count == 0)
+                                {
+                                    <div class="text-muted small">暂无患者。</div>
+                                }
+                                else
+                                {
+                                    <div class="table-responsive" style="max-height: 260px; overflow:auto;">
+                                        <table class="table table-sm table-bordered align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>患者</th>
+                                                    <th style="width: 110px;">最近触发</th>
+                                                    <th style="width: 84px;" class="text-center">状态</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var p in members)
+                                                {
+                                                    rg.LatestDates.TryGetValue(p.UserId, out var latest);
+                                                    <tr>
+                                                        <td>
+                                                            <div class="fw-semibold">@p.DisplayName</div>
+                                                            <div class="text-muted small">@(string.IsNullOrWhiteSpace(p.PhoneNumber) ? "未留联系方式" : p.PhoneNumber)</div>
+                                                        </td>
+                                                        <td class="text-muted small">@(latest == default ? "—" : latest.ToString("yyyy-MM-dd"))</td>
+                                                        <td class="text-center">
+                                                            <span class="badge @(p.IsActive ? "bg-success" : "bg-secondary")">@((p.IsActive ? "活跃" : "停用"))</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="row g-3">
+            @foreach (var groupName in defaultGroupNames)
+            {
+                var isAutoGroup = !string.Equals(groupName, "重点关注对象", StringComparison.OrdinalIgnoreCase);
+                var isFocusGroup = string.Equals(groupName, "重点关注对象", StringComparison.OrdinalIgnoreCase);
+                var group = groups.FirstOrDefault(x => string.Equals(x.GroupName, groupName, StringComparison.OrdinalIgnoreCase));
+                var groupId = group?.GroupId ?? 0;
+                var memberIds = maps.Where(m => m.GroupId == groupId).Select(m => m.PatientId).Distinct().ToHashSet();
+                var members = patients.Where(p => memberIds.Contains(p.UserId)).OrderBy(p => p.DisplayName).ToList();
+                var nonMembers = (isAutoGroup || isFocusGroup) ? new List<DiabetesPatientApp.ViewModels.DoctorPatientSummary>() : patients.Where(p => !memberIds.Contains(p.UserId)).OrderBy(p => p.DisplayName).ToList();
+
+                <div class="col-12 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="fw-semibold">@groupName</div>
+                            <span class="badge bg-secondary">@(members.Count) 人</span>
+                        </div>
+                        <div class="card-body">
+                            @if (groupId <= 0)
+                            {
+                                <div class="text-muted">分组初始化中，请刷新页面。</div>
+                            }
+                            else
+                            {
+                                @if (isAutoGroup)
+                                {
+                                    <div class="alert alert-light border small mb-3">
+                                        该分组由系统根据患者端“信息完善”自动归类，无需手动加入/移出。
+                                    </div>
+                                }
+                                else
+                                {
+                                    @if (isFocusGroup)
+                                    {
+                                        <div class="alert alert-light border small mb-3">
+                                            该分组由医生在「高危患者预警」页面点击“列为重点关注对象”按钮添加；此处不提供手动加入入口。
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="mb-3">
+                                            <div class="fw-semibold small mb-2">加入该组</div>
+                                            <form method="post" action="@Url.Action("AssignPatientsToGroup", "Doctor")">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="groupId" value="@groupId" />
+                                                @if (nonMembers.Count == 0)
+                                                {
+                                                    <div class="text-muted small">所有患者已在该组。</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="table-responsive" style="max-height: 220px; overflow:auto;">
+                                                        <table class="table table-sm table-bordered align-middle mb-2">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                    <th style="width: 44px;"></th>
+                                                                    <th>患者</th>
+                                                                    <th style="width: 84px;" class="text-center">状态</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var p in nonMembers)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="text-center">
+                                                                            <input class="form-check-input" type="checkbox" name="patientIds" value="@p.UserId" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="fw-semibold">@p.DisplayName</div>
+                                                                            <div class="text-muted small">@(string.IsNullOrWhiteSpace(p.PhoneNumber) ? "未留联系方式" : p.PhoneNumber)</div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <span class="badge @(p.IsActive ? "bg-success" : "bg-secondary")">@((p.IsActive ? "活跃" : "停用"))</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <button type="submit" class="btn btn-sm btn-primary text-white">加入该组</button>
+                                                    </div>
+                                                }
+                                            </form>
+                                        </div>
+                                    }
+                                }
+
+                                <div>
+                                    <div class="fw-semibold small mb-2">该组成员</div>
+                                    @if (isAutoGroup)
+                                    {
+                                        @if (members.Count == 0)
+                                        {
+                                            <div class="text-muted small">暂无成员。</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="table-responsive" style="max-height: 260px; overflow:auto;">
+                                                <table class="table table-sm table-bordered align-middle mb-0">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>患者</th>
+                                                            <th style="width: 84px;" class="text-center">状态</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var p in members)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="fw-semibold">@p.DisplayName</div>
+                                                                    <div class="text-muted small">@(string.IsNullOrWhiteSpace(p.PhoneNumber) ? "未留联系方式" : p.PhoneNumber)</div>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <span class="badge @(p.IsActive ? "bg-success" : "bg-secondary")">@((p.IsActive ? "活跃" : "停用"))</span>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <form method="post" action="@Url.Action("RemovePatientsFromGroup", "Doctor")" onsubmit="return confirm('确定将所选患者移出该组？');">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="groupId" value="@groupId" />
+                                            @if (members.Count == 0)
+                                            {
+                                                <div class="text-muted small">暂无成员。</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="table-responsive" style="max-height: 220px; overflow:auto;">
+                                                    <table class="table table-sm table-bordered align-middle mb-2">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width: 44px;"></th>
+                                                                <th>患者</th>
+                                                                <th style="width: 84px;" class="text-center">状态</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var p in members)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center">
+                                                                        <input class="form-check-input" type="checkbox" name="patientIds" value="@p.UserId" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="fw-semibold">@p.DisplayName</div>
+                                                                        <div class="text-muted small">@(string.IsNullOrWhiteSpace(p.PhoneNumber) ? "未留联系方式" : p.PhoneNumber)</div>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <span class="badge @(p.IsActive ? "bg-success" : "bg-secondary")">@((p.IsActive ? "活跃" : "停用"))</span>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="text-end">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">移出该组</button>
+                                                </div>
+                                            }
+                                        </form>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+

@@ -1,0 +1,67 @@
+@using DiabetesPatientApp.Models
+@{
+    ViewData["Title"] = "伤口监护提醒内容";
+    bool hasUploadedThisWeek = ViewBag.HasUploadedThisWeek == true;
+    var thisWeekMonday = ViewBag.ThisWeekMonday as DateTime? ?? DateTime.Today;
+    var woundReminderStartTime = ViewBag.WoundReminderStartTime as DateTime? ?? thisWeekMonday.AddHours(12);
+    var woundReminderStatusCode = ViewBag.WoundReminderStatusCode as string ?? "Upcoming";
+    var woundReminderStatusText = ViewBag.WoundReminderStatusText as string ?? "未开始";
+    var weeklyStats = ViewBag.WeeklyStats as List<WoundWeekStat> ?? new List<WoundWeekStat>();
+    string woundCreateUrl = Convert.ToString(ViewBag.WoundCreateUrl) ?? (Url.Action("Create", "Wound") ?? "#");
+}
+
+<div class="mt-3 px-3">
+    <div class="row mb-3">
+        <div class="col"><h4 class="mb-0">伤口监护提醒内容</h4></div>
+        <div class="col-auto d-flex gap-2">
+            <a href="@Url.Action("Index")" class="btn btn-primary text-white">返回列表</a>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <h6 class="mb-2">提醒说明</h6>
+        <p class="mb-2">系统默认<strong>每周一中午 12:00</strong> 自动提醒上传一次伤口照片。到北京时间每周一 12:00 后，系统会自动读取本周是否已在伤口监护界面上传照片。</p>
+        <p class="text-muted small mb-2">若本周已上传则显示“已完成”，未上传则显示“未完成”。系统按周自动统计伤口照片上传情况（以周一为每周起始日）。</p>
+        <p class="mb-2">
+            本周提醒开始时间：<strong>@woundReminderStartTime.ToString("yyyy-MM-dd HH:mm")</strong>
+            <span class="ms-2 @(woundReminderStatusCode == "Completed" ? "text-success" : woundReminderStatusCode == "Incomplete" ? "text-danger" : "text-muted")">@woundReminderStatusText</span>
+        </p>
+        <div class="table-responsive bg-white rounded">
+            <table class="table table-bordered table-sm mb-2">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 50%;">周期</th>
+                        <th style="width: 50%;">状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var w in weeklyStats)
+                    {
+                        <tr>
+                            <td>@w.Label</td>
+                            <td>
+                                @if (w.Uploaded)
+                                {
+                                    <span class="text-success">已上传</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">未上传</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a href="@woundCreateUrl" class="btn btn-primary btn-sm">去上传伤口照片</a>
+    </div>
+
+    @if (!hasUploadedThisWeek && woundReminderStatusCode == "Incomplete")
+    {
+        <div class="alert alert-warning d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <span>本周（@thisWeekMonday.ToString("M/d") 起）尚未上传伤口照片，请及时上传。</span>
+            <a href="@woundCreateUrl" class="btn btn-warning btn-sm text-white">上传伤口照片</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,8 @@
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.csproj.AssemblyReference.cache
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.AssemblyInfoInputs.cache
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.AssemblyInfo.cs
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.csproj.CoreCompileInputs.cache
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.MvcApplicationPartsAssemblyInfo.cache
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.RazorAssemblyInfo.cache
+c:\Users\Lenovo\Desktop\p138\obj_verify_q\Debug\net8.0\DiabetesPatientApp.RazorAssemblyInfo.cs

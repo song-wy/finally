@@ -1,0 +1,140 @@
+@model DiabetesPatientApp.ViewModels.DoctorFollowUpPageViewModel
+
+@{
+    ViewData["Title"] = "回访登记";
+}
+
+<div class="container-fluid mt-3">
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <div class="alert alert-info">@Model.StatusMessage</div>
+    }
+
+    <div class="row g-3">
+        <div class="col-12 col-lg-5">
+            <div class="card">
+                <div class="card-header">新增回访登记</div>
+                <div class="card-body">
+                    <form action="@Url.Action("FollowUps", "Doctor")" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label class="form-label">选择患者</label>
+                            <select class="form-select" name="PatientId" required>
+                                <option value="">请选择患者</option>
+                                @foreach (var patient in Model.Patients)
+                                {
+                                    if (patient.PatientId == Model.Form.PatientId)
+                                    {
+                                        <option value="@patient.PatientId" selected>@patient.DisplayName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@patient.PatientId">@patient.DisplayName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">回访日期</label>
+                            <input class="form-control" type="date" name="FollowUpDate" value="@Model.Form.FollowUpDate.ToString("yyyy-MM-dd")" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">回访方式</label>
+                            <select class="form-select" name="FollowUpMethod" required>
+                                @{
+                                    var methods = new[] { "电话回访", "门诊回访", "微信回访", "视频回访", "其他" };
+                                }
+                                @foreach (var method in methods)
+                                {
+                                    if (string.Equals(Model.Form.FollowUpMethod, method, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <option value="@method" selected>@method</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@method">@method</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">回访内容</label>
+                            <textarea class="form-control" name="Summary" rows="4" required>@Model.Form.Summary</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">医生建议</label>
+                            <textarea class="form-control" name="Advice" rows="3">@Model.Form.Advice</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">下次回访日期</label>
+                            <input class="form-control" type="date" name="NextFollowUpDate" value="@(Model.Form.NextFollowUpDate?.ToString("yyyy-MM-dd") ?? string.Empty)" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary text-white">保存登记</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+            <form action="@Url.Action("DeleteSelectedFollowUps", "Doctor")" method="post">
+                @Html.AntiForgeryToken()
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>最近回访记录</span>
+                        <button type="submit" class="btn btn-danger btn-sm text-white" onclick="return confirm('确定删除勾选的回访记录吗？');">删除</button>
+                    </div>
+                    @if (Model.Records.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 44px;"></th>
+                                        <th>患者</th>
+                                        <th>回访日期</th>
+                                        <th>方式</th>
+                                        <th>回访内容</th>
+                                        <th>下次回访</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var record in Model.Records)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input class="form-check-input" type="checkbox" name="selectedFollowUpIds" value="@record.FollowUpRecordId" />
+                                            </td>
+                                            <td>
+                                                <div class="fw-semibold">@record.PatientName</div>
+                                            </td>
+                                            <td>@record.FollowUpDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@record.FollowUpMethod</td>
+                                            <td>
+                                                <div>@record.Summary</div>
+                                                @if (!string.IsNullOrWhiteSpace(record.Advice))
+                                                {
+                                                    <small class="text-muted">建议：@record.Advice</small>
+                                                }
+                                            </td>
+                                            <td>@(record.NextFollowUpDate?.ToString("yyyy-MM-dd") ?? "未安排")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body text-muted">暂无回访登记记录。</div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
