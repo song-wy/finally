@@ -659,6 +659,88 @@
       ]
     },
     {
+      "Route": "uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg",
+      "AssetFile": "uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "39342"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 15:13:53 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.uvvjjwxb0t.jpg",
+      "AssetFile": "uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "39342"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Mar 2026 15:13:53 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "uvvjjwxb0t"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg"
+        }
+      ]
+    },
+    {
       "Route": "uploads/wounds/3_639088666336723322.jpg",
       "AssetFile": "uploads/wounds/3_639088666336723322.jpg",
       "Selectors": [],

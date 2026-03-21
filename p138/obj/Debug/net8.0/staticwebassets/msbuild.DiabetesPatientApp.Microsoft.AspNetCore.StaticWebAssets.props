@@ -144,6 +144,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\education\20260318201059_f45436252d364999a94bd403b8d7f17b.docx'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\education\20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DiabetesPatientApp</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DiabetesPatientApp</BasePath>
+      <RelativePath>uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>uvvjjwxb0t</Fingerprint>
+      <Integrity>KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\education\20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\wounds\3_639088666336723322.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>DiabetesPatientApp</SourceId>

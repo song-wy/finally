@@ -96,6 +96,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"dpg4pow8yv"},{"Name":"integrity","Value":"sha256-b7kK8\u002B94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0="},{"Name":"label","Value":"_content/DiabetesPatientApp/uploads/education/20260318201059_f45436252d364999a94bd403b8d7f17b.docx"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16035"},{"Name":"Content-Type","Value":"application/vnd.openxmlformats-officedocument.wordprocessingml.document"},{"Name":"ETag","Value":"\u0022b7kK8\u002B94qGHYmJn1F2Ixw4PJLT4R51AJnhHYx9qdDE0=\u0022"},{"Name":"Last-Modified","Value":"Wed, 18 Mar 2026 12:11:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DiabetesPatientApp/uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\education\20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"39342"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk=\u0022"},{"Name":"Last-Modified","Value":"Wed, 18 Mar 2026 15:13:53 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DiabetesPatientApp/uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.uvvjjwxb0t.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\education\20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"uvvjjwxb0t"},{"Name":"integrity","Value":"sha256-KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk="},{"Name":"label","Value":"_content/DiabetesPatientApp/uploads/education/20260318231353_3c2fb6a2af6641c6be3093645b8e7850.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"39342"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022KmsLPIdnvexN0h07RDSnU7Bto1xagbbdjG4vC5VjyHk=\u0022"},{"Name":"Last-Modified","Value":"Wed, 18 Mar 2026 15:13:53 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DiabetesPatientApp/uploads/wounds/3_639088666336723322.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\wounds\3_639088666336723322.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
