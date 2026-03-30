@@ -28,6 +28,11 @@ namespace DiabetesPatientApp.Controllers
             _highRiskAlertService = highRiskAlertService;
         }
 
+        private int GetDoctorId()
+        {
+            return HttpContext.Session.GetInt32("UserId") ?? 0;
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
@@ -292,6 +297,106 @@ namespace DiabetesPatientApp.Controllers
             
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var doctorId = GetDoctorId();
+            var user = await _context.Users
+                .AsNoTracking()
+                .Include(u => u.DoctorProfile)
+                .FirstOrDefaultAsync(u => u.UserId == doctorId && u.UserType == "Doctor");
+
+            if (user == null)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Auth");
+            }
+
+            var profile = user.DoctorProfile;
+            var model = new DiabetesPatientApp.ViewModels.DoctorProfileViewModel
+            {
+                UserId = user.UserId,
+                Username = user.Username ?? string.Empty,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Department = profile?.Department,
+                ProfessionalTitle = profile?.ProfessionalTitle,
+                HospitalName = profile?.HospitalName,
+                Specialty = profile?.Specialty,
+                ConsultationHours = profile?.ConsultationHours,
+                ClinicAddress = profile?.ClinicAddress,
+                Introduction = profile?.Introduction
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(DiabetesPatientApp.ViewModels.DoctorProfileViewModel model)
+        {
+            var doctorId = GetDoctorId();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _context.Users
+                .Include(u => u.DoctorProfile)
+                .FirstOrDefaultAsync(u => u.UserId == doctorId && u.UserType == "Doctor");
+
+            if (user == null)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Auth");
+            }
+
+            var normalizedEmail = string.IsNullOrWhiteSpace(model.Email) ? null : model.Email.Trim();
+            if (!string.IsNullOrWhiteSpace(normalizedEmail))
+            {
+                var duplicatedEmail = await _context.Users
+                    .AsNoTracking()
+                    .AnyAsync(u => u.UserId != doctorId && u.Email != null && u.Email.ToLower() == normalizedEmail.ToLower());
+                if (duplicatedEmail)
+                {
+                    ModelState.AddModelError(nameof(model.Email), "该邮箱已被其他账号使用");
+                    return View(model);
+                }
+            }
+
+            user.FullName = string.IsNullOrWhiteSpace(model.FullName) ? user.Username : model.FullName.Trim();
+            user.Email = normalizedEmail;
+            user.PhoneNumber = string.IsNullOrWhiteSpace(model.PhoneNumber) ? null : model.PhoneNumber.Trim();
+
+            var profile = user.DoctorProfile;
+            if (profile == null)
+            {
+                profile = new DiabetesPatientApp.Models.DoctorProfile
+                {
+                    UserId = doctorId,
+                    CreatedDate = DateTime.Now
+                };
+                _context.DoctorProfiles.Add(profile);
+                user.DoctorProfile = profile;
+            }
+
+            profile.Department = string.IsNullOrWhiteSpace(model.Department) ? string.Empty : model.Department.Trim();
+            profile.ProfessionalTitle = string.IsNullOrWhiteSpace(model.ProfessionalTitle) ? string.Empty : model.ProfessionalTitle.Trim();
+            profile.HospitalName = string.IsNullOrWhiteSpace(model.HospitalName) ? string.Empty : model.HospitalName.Trim();
+            profile.Specialty = string.IsNullOrWhiteSpace(model.Specialty) ? string.Empty : model.Specialty.Trim();
+            profile.ConsultationHours = string.IsNullOrWhiteSpace(model.ConsultationHours) ? string.Empty : model.ConsultationHours.Trim();
+            profile.ClinicAddress = string.IsNullOrWhiteSpace(model.ClinicAddress) ? string.Empty : model.ClinicAddress.Trim();
+            profile.Introduction = string.IsNullOrWhiteSpace(model.Introduction) ? string.Empty : model.Introduction.Trim();
+
+            await _context.SaveChangesAsync();
+
+            HttpContext.Session.SetString("FullName", user.FullName ?? user.Username ?? string.Empty);
+            TempData["Success"] = "个人档案已更新。";
+
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpGet]

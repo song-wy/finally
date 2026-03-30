@@ -1,0 +1,99 @@
+@model DiabetesPatientApp.ViewModels.DoctorProfileViewModel
+
+@{
+    ViewData["Title"] = "医生个人档案";
+}
+
+<div class="container-fluid mt-3">
+    @if (TempData["Success"] is string successMessage && !string.IsNullOrWhiteSpace(successMessage))
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="card">
+                <div class="card-header">医生个人档案</div>
+                <div class="card-body">
+                    <form action="@Url.Action("Profile", "Doctor")" method="post">
+                        @Html.AntiForgeryToken()
+
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            var modelErrors = ViewData.ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage)
+                                .Where(e => !string.IsNullOrWhiteSpace(e))
+                                .Distinct()
+                                .ToList();
+                            if (modelErrors.Any())
+                            {
+                                <div class="alert alert-danger">
+                                    @foreach (var error in modelErrors)
+                                    {
+                                        <div>@error</div>
+                                    }
+                                </div>
+                            }
+                        }
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">用户名</label>
+                                <input class="form-control" value="@Model.Username" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">姓名</label>
+                                <input class="form-control" name="FullName" value="@Model.FullName" placeholder="请输入姓名" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">邮箱</label>
+                                <input class="form-control" name="Email" type="email" value="@Model.Email" placeholder="请输入邮箱" />
+                                @if (ViewData.ModelState[nameof(Model.Email)]?.Errors.Count > 0)
+                                {
+                                    <div class="text-danger small mt-1">@ViewData.ModelState[nameof(Model.Email)]!.Errors[0].ErrorMessage</div>
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">联系电话</label>
+                                <input class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="请输入联系电话" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">科室</label>
+                                <input class="form-control" name="Department" value="@Model.Department" placeholder="请输入所在科室" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">职称</label>
+                                <input class="form-control" name="ProfessionalTitle" value="@Model.ProfessionalTitle" placeholder="请输入职称" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">所属医院</label>
+                                <input class="form-control" name="HospitalName" value="@Model.HospitalName" placeholder="请输入医院名称" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">专长</label>
+                                <input class="form-control" name="Specialty" value="@Model.Specialty" placeholder="请输入专业擅长" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">门诊时间</label>
+                                <input class="form-control" name="ConsultationHours" value="@Model.ConsultationHours" placeholder="请输入门诊时间" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">诊所地址</label>
+                                <input class="form-control" name="ClinicAddress" value="@Model.ClinicAddress" placeholder="请输入诊所地址" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">个人简介</label>
+                                <textarea class="form-control" name="Introduction" rows="4" placeholder="请输入个人简介（可选）">@Model.Introduction</textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary text-white">保存信息</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

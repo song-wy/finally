@@ -24,6 +24,7 @@ namespace DiabetesPatientApp.Services
 			await EnsureUserProfileColumnsAsync();
 			await EnsureAdminEntryLogsTableAsync();
 			await EnsureSystemSettingsTableAsync();
+			await EnsureDoctorProfilesTableAsync();
 			await EnsureMedicalExperienceFeedbackTableAsync();
 			await EnsureDoctorCustomGroupTablesAsync();
 			await EnsureFollowUpTableAsync();
@@ -163,6 +164,25 @@ WHERE NOT EXISTS (SELECT 1 FROM SystemSettings WHERE Key='AllowRegistration');")
 INSERT INTO SystemSettings (Key, Value, UpdatedAt)
 SELECT 'MaxUploadMB', '30', datetime('now')
 WHERE NOT EXISTS (SELECT 1 FROM SystemSettings WHERE Key='MaxUploadMB');");
+		}
+
+		private async Task EnsureDoctorProfilesTableAsync()
+		{
+			await _context.Database.ExecuteSqlRawAsync(@"
+CREATE TABLE IF NOT EXISTS DoctorProfiles (
+    DoctorProfileId INTEGER NOT NULL CONSTRAINT PK_DoctorProfiles PRIMARY KEY AUTOINCREMENT,
+    UserId INTEGER NOT NULL UNIQUE,
+    Department TEXT NOT NULL,
+    ProfessionalTitle TEXT NOT NULL,
+    HospitalName TEXT NOT NULL,
+    Specialty TEXT NOT NULL,
+    Introduction TEXT NOT NULL,
+    ConsultationHours TEXT NOT NULL,
+    ClinicAddress TEXT NOT NULL,
+    CreatedDate TEXT NOT NULL,
+    CONSTRAINT FK_DoctorProfiles_Users_UserId FOREIGN KEY (UserId) REFERENCES Users (UserId) ON DELETE CASCADE
+);");
+			await _context.Database.ExecuteSqlRawAsync("CREATE UNIQUE INDEX IF NOT EXISTS IX_DoctorProfiles_UserId ON DoctorProfiles (UserId);");
 		}
 
 		private async Task EnsureFollowUpReminderNotificationsTableAsync()
